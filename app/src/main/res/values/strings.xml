@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">DuStoreApplication</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">毒</string>
+    <string name="title_dashboard">购物</string>
+    <string name="title_notifications">我</string>
+    <string name="all_comment">全部评论</string>
+    <string name="app_title">所 见 × 所 想 × 所 得</string>
+    <string name="skip">跳过</string>
+    <string name="local_host">192.168.1.103:9001</string>
+    <string name="customer_receiver">com.dustoreapplication.android.logic.CUSTOMER_RECEIVER</string>
+    <string name="address_receiver">com.dustoreapplication.android.logic.ADDRESS_RECEIVER</string>
+    <string name="good_all_receiver">com.dustoreapplication.android.logic.GOOD_ALL_RECEIVER</string>
+    <string name="good_related_receiver">com.dustoreapplication.android.logic.GOOD_RELATED_RECEIVER</string>
+    <string name="good_info_receiver">com.dustoreapplication.android.logic.GOOD_INFO_RECEIVER</string>
+    <string name="panel_slide_receiver">com.dustoreapplication.android.logic.PANEL_SLIDE_RECEIVER</string>
+    <string name="panel_block_receiver">com.dustoreapplication.android.logic.PANEL_BLOCK_RECEIVER</string>
+    <string name="order_all_receiver">com.dustoreapplication.android.logic.ORDER_ALL_RECEIVER</string>
+    <string name="order_new_receiver">com.dustoreapplication.android.logic.ORDER_NEW_RECEIVER</string>
+    <string name="good_select_receiver">com.dustoreapplication.android.logic.GOOD_SELECT_RECEIVER</string>
+
+    <string name="not_logged_in_prompt">登录后继续操作</string>
+    <string name="error_code_login_prompt">账号或验证码错误</string>
+    <string name="clock_in">每日打卡</string>
+    <string name="creative_workshop">创作中心</string>
+    <string name="liked_title">被喜欢</string>
+    <string name="fans_title">粉丝</string>
+    <string name="attention_title">关注</string>
+    <string name="dynamic_title">动态</string>
+    <string name="wechat_title">微信</string>
+    <string name="google_plus_title">谷歌+</string>
+    <string name="qq_title">QQ</string>
+    <string name="log_out">退出登录</string>
+    <string name="default_address_prompt">默认地址</string>
+    <string name="address_edit_prompt">编辑</string>
+    <string name="address_delete_prompt">删除</string>
+    <string name="bind_phone_prompt">绑定手机</string>
+    <string name="change_phone_prompt">更换号码</string>
+    <string name="bind_third_prompt">社交账号绑定</string>
+    <string name="is_binding">绑定</string>
+    <string name="not_binding">解绑</string>
+    <string name="good_detail_toolbar_action_service">客服</string>
+    <string name="good_detail_toolbar_action_share">分享</string>
+    <string name="good_detail_toolbar_action_wish">求购</string>
+    <string name="good_detail_tab_action_good">商品</string>
+    <string name="good_detail_tab_action_style">穿搭</string>
+    <string name="good_detail_related_title">相关商品</string>
+    <string name="good_detail_collection">收藏</string>
+    <string name="good_detail_sell">出售</string>
+    <string name="good_detail_buy">立即购买</string>
+</resources>

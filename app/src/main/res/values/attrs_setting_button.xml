@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="SettingButton">
+        <attr name="settingShowLabel" format="string"/>
+    </declare-styleable>
+</resources>

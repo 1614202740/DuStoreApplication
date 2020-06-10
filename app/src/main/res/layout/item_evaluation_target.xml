@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/light_gray"
+    android:padding="4dp"
+    android:layout_marginEnd="16dp">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/evaluation_target_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:layout_marginEnd="48dp"
+        android:textSize="12sp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/evaluation_target_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:textSize="12sp"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

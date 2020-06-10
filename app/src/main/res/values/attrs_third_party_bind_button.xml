@@ -1,0 +1,11 @@
+<resources>
+    <declare-styleable name="ThirdPartyBindButton">
+        <attr name="thirdShowLabel" format="string"/>
+        <attr name="uncheckedButtonColor" format="color"/>
+        <attr name="checkedButtonColor" format="color"/>
+        <attr name="uncheckedTextColor" format="color"/>
+        <attr name="checkedTextColor" format="color"/>
+        <attr name="isBinding" format="boolean"/>
+        <attr name="icon" format="reference"/>
+    </declare-styleable>
+</resources>
