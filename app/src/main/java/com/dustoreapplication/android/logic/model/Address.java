@@ -19,7 +19,7 @@ public class Address implements Parcelable {
     private String addressId;
     @NonNull
     private String userId;
-
+    private String consigneeName;
     private String phone;
     private String province;
     private String city;
@@ -33,6 +33,7 @@ public class Address implements Parcelable {
     protected Address(Parcel in) {
         addressId = in.readString();
         userId = in.readString();
+        consigneeName = in.readString();
         phone = in.readString();
         province = in.readString();
         city = in.readString();
@@ -63,6 +64,7 @@ public class Address implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(addressId);
         dest.writeString(userId);
+        dest.writeString(consigneeName);
         dest.writeString(phone);
         dest.writeString(province);
         dest.writeString(city);

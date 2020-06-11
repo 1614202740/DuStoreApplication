@@ -7,14 +7,17 @@
     android:orientation="vertical"
     tools:context=".ui.activity.OrderDetailActivity">
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/order_detail_tb"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/white"
         app:title="确认订单"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_gray">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/light_gray"
+        android:paddingBottom="1dp">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,8 +35,8 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:background="@drawable/ic_map"/>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/order_detail_consignee_tv"
@@ -41,7 +44,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="收货人：曹威"
-                        android:textSize="16sp"
                         android:textColor="@android:color/black"
                         android:textStyle="bold"/>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -49,7 +51,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="18179452183"
-                        android:textSize="16sp"
                         android:textColor="@android:color/black"
                         android:textStyle="bold"/>
                     <androidx.appcompat.widget.AppCompatImageView
@@ -62,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <View
-                        android:layout_width="36dp"
+                        android:layout_width="28dp"
                         android:layout_height="match_parent"/>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/order_detail_address_tv"
@@ -71,86 +72,94 @@
                         android:text="江西省南昌市青山湖区南昌大学"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/order_detail_item_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@android:color/white"
+                android:layout_gravity="center_vertical"
                 android:padding="16dp"
-                android:layout_marginBottom="0.5dp">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/order_detail_thumbnail_iv"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/shape_rectangle_gray_tiny_stroke"
-                    android:padding="0.1dp"
-                    android:layout_marginEnd="16dp"/>
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/order_detail_title_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        android:ems="6"
-                        android:text="Nike Air Force 1 Low Year of the Snake"
-                        android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/order_detail_size_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="44"
-                            android:layout_marginEnd="8dp"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/order_detail_count_tv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="数量x1"/>
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="bottom">
-                        <com.dustoreapplication.android.view.SquareImageView
-                            android:id="@+id/order_detail_logo_iv"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginEnd="4dp"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/order_detail_price_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="￥2499"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginBottom="8dp">
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/order_detail_shipping_title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="顺丰速运"
-                    text
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@android:color/black"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/order_detail_shipping_price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18.00"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/order_detail_protocol_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@android:color/white">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实付款："
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/order_detail_total_price_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="692.00"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/order_detail_check_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交订单"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

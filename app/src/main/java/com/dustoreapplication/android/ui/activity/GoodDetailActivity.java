@@ -137,7 +137,7 @@ public class GoodDetailActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(Intent intent) {
-                Toast.makeText(context,"订单提交成功",Toast.LENGTH_SHORT).show();
+                OrderDetailActivity.startActivity(context, intent.getParcelableExtra("order"));
             }
         }),new IntentFilter(getString(R.string.order_new_receiver)));
         buyButton.setOnClickListener(v-> showBottomDialog());
@@ -224,7 +224,6 @@ public class GoodDetailActivity extends AppCompatActivity {
             dialog.show();
         }
         mViewModel.getPosition().observe(this,position->{
-
             ArrayList<GoodSelectVo> vos = mViewModel.getSelectVo().getValue();
             if(vos!=null) {
                 GoodSelectVo good = vos.get(position);
@@ -266,6 +265,7 @@ public class GoodDetailActivity extends AppCompatActivity {
             orderDto.setPostFee(price <= 99 ? 0 : 6);
             orderDto.setStatus(0);
             orderDto.setAddressId("1266645794712920066");
+            dialog.dismiss();
             OrderIntentService.startActionNew(this,orderDto);
         });
     }

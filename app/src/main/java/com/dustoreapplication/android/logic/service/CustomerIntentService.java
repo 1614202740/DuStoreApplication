@@ -214,7 +214,9 @@ public class CustomerIntentService extends IntentService {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e("Code","Address Error"+new Date());
+                Intent intent = new Intent(getString(R.string.address_receiver));
+                intent.putExtra("status","0");
+                sendBroadcast(intent);
             }
 
             @Override
@@ -230,6 +232,7 @@ public class CustomerIntentService extends IntentService {
                     e.printStackTrace();
                 }finally {
                     Intent intent = new Intent(getString(R.string.address_receiver));
+                    intent.putExtra("status","1");
                     intent.putParcelableArrayListExtra("addresses",addresses);
                     sendBroadcast(intent);
                 }

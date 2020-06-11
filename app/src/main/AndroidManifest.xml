@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.OrderDetailActivity"></activity>
+        <activity android:name=".ui.activity.CheckStandActivity"></activity>
+        <activity android:name=".ui.activity.OrderDetailActivity" />
         <activity android:name=".ui.order.OrderActivity" />
         <activity android:name=".ui.activity.GoodDetailActivity" />
         <activity android:name=".ui.activity.SecurityActivity" />

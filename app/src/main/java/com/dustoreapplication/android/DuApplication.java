@@ -40,10 +40,9 @@ public class DuApplication extends Application {
     }
 
     public static void registerCustomerReceiver(Context context, CustomerReceiver.Message message){
-        CustomerReceiver mReceiver = new CustomerReceiver();
+        CustomerReceiver mReceiver = new CustomerReceiver(message);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.dustoreapplication.android.logic.CUSTOMER_RECEIVER");
         context.registerReceiver(mReceiver,intentFilter);
-        mReceiver.setMessage(message);
     }
 }
