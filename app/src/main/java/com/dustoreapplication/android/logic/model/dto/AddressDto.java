@@ -1,4 +1,4 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,39 +6,36 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 import lombok.Data;
-import lombok.NonNull;
 
 /**
  * Created by 16142
- * on 2020/5/30
+ * on 2020/6/12
  * @author 16142
  */
 @Data
-public class Address implements Parcelable {
-    @NonNull
-    private String addressId;
-    @NonNull
+public class AddressDto implements Serializable, Parcelable {
+
+    private static final long serialVersionUID = 1618887603385009697L;
+
     private String userId;
-    private String consigneeName;
+
+    private String receiverName;
+
     private String phone;
+
     private String province;
+
     private String city;
+
     private String area;
+
     private String details;
+
     private Boolean isDefault;
-    private Boolean isDeleted;
 
-    public Address() {
-    }
-
-    public Address(String userId){
-        this.userId = userId;
-    }
-
-    protected Address(Parcel in) {
-        addressId = in.readString();
+    protected AddressDto(Parcel in) {
         userId = in.readString();
-        consigneeName = in.readString();
+        receiverName = in.readString();
         phone = in.readString();
         province = in.readString();
         city = in.readString();
@@ -48,15 +45,15 @@ public class Address implements Parcelable {
         isDefault = tmpIsDefault == 0 ? null : tmpIsDefault == 1;
     }
 
-    public static final Creator<Address> CREATOR = new Creator<Address>() {
+    public static final Creator<AddressDto> CREATOR = new Creator<AddressDto>() {
         @Override
-        public Address createFromParcel(Parcel in) {
-            return new Address(in);
+        public AddressDto createFromParcel(Parcel in) {
+            return new AddressDto(in);
         }
 
         @Override
-        public Address[] newArray(int size) {
-            return new Address[size];
+        public AddressDto[] newArray(int size) {
+            return new AddressDto[size];
         }
     };
 
@@ -67,9 +64,8 @@ public class Address implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(addressId);
         dest.writeString(userId);
-        dest.writeString(consigneeName);
+        dest.writeString(receiverName);
         dest.writeString(phone);
         dest.writeString(province);
         dest.writeString(city);

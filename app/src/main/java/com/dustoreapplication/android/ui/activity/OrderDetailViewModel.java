@@ -25,6 +25,8 @@ public class OrderDetailViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Address>> addresses = new MutableLiveData<>();
     private final MutableLiveData<Integer> positionAddress = new MutableLiveData<>(0);
     private final MutableLiveData<Double> totalPrice = new MutableLiveData<>();
+    private final MutableLiveData<String> orderId = new MutableLiveData<>();
+
     public void setConsignee(Address address){
         if(address==null){
             return;
@@ -93,5 +95,13 @@ public class OrderDetailViewModel extends ViewModel {
 
     public MutableLiveData<Double> getTotalPrice() {
         return totalPrice;
+    }
+
+    public void setOrderId(String orderId){
+        this.orderId.setValue(orderId);
+    }
+
+    public MutableLiveData<String> getOrderId() {
+        return orderId;
     }
 }

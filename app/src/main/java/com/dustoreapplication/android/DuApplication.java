@@ -28,7 +28,7 @@ public class DuApplication extends Application {
     public static Stack<AppCompatActivity> activities = new Stack<>();
     public static Customer customer = null;
     public static String token = null;
-    public final static String LOCAL_HOST = "http://192.168.43.227:9001";
+    public final static String LOCAL_HOST = "http://192.168.1.109:9001";
 
     public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(3, 5, 1, TimeUnit.SECONDS,
             new LinkedBlockingDeque<>(100),new MyThreadFactory(false));

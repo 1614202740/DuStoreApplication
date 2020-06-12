@@ -65,6 +65,13 @@ public class OrderIntentService extends IntentService {
         context.startService(intent);
     }
 
+    public static void startActionCancel(Context context, String orderId){
+        Intent intent = new Intent(context,OrderIntentService.class);
+        intent.setAction(ACTION_CANCEL);
+        intent.putExtra("orderId",orderId);
+        context.startService(intent);
+    }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if(intent==null||DuApplication.token==null){
@@ -75,6 +82,8 @@ public class OrderIntentService extends IntentService {
             handleActionNew(intent.getParcelableExtra("order"));
         }else if(ACTION_SEARCH_ALL.equals(action)){
             handleActionSearchAll(intent.getStringExtra("userId"));
+        }else if(ACTION_CANCEL.equals(action)){
+            handleActionCancel(intent.getStringExtra("orderId"));
         }
     }
 
@@ -175,7 +184,26 @@ public class OrderIntentService extends IntentService {
 
     }
 
-    private void handleActionCancel(){
+    private void handleActionCancel(String orderId){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header("token",DuApplication.token).url(LOCAL_URL+ORDER_URL+"/cancel/"+orderId)
+                .put(RequestBody.create("",MediaType.parse("application/json; charset=utf-8")))
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Intent intent = new Intent(getString(R.string.order_cancel_receiver));
+                intent.putExtra("status","0");
+                sendBroadcast(intent);
+            }
 
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                Intent intent = new Intent(getString(R.string.order_cancel_receiver));
+                intent.putExtra("status","1");
+                sendBroadcast(intent);
+            }
+        });
     }
 }

@@ -8,13 +8,17 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.model.Order;
 import com.dustoreapplication.android.logic.model.vo.PayTypeVo;
+import com.dustoreapplication.android.logic.receiver.OrderReceiver;
+import com.dustoreapplication.android.logic.service.OrderIntentService;
 
 import java.util.ArrayList;
 
@@ -34,6 +38,7 @@ public class CheckStandActivity extends AppCompatActivity {
     private PayTypeAdapter mAdapter;
 
     private LifecycleOwner lifecycleOwner = this;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,18 @@ public class CheckStandActivity extends AppCompatActivity {
         submitLinearLayout.setOnClickListener(v->{
             finish();
         });
+
+        registerReceiver(new OrderReceiver(new OrderReceiver.Message() {
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onSuccess(Intent intent) {
+                finish();
+            }
+        }),new IntentFilter(getString(R.string.order_cancel_receiver)));
     }
 
     private void initTestData(){
@@ -82,6 +99,7 @@ public class CheckStandActivity extends AppCompatActivity {
     private void initData(){
         double price = getIntent().getDoubleExtra("price",0.00);
         mViewModel.setTotalPrice(price);
+        mViewModel.setOrderId(getIntent().getStringExtra("orderId"));
     }
 
     private void initView(){
@@ -94,9 +112,31 @@ public class CheckStandActivity extends AppCompatActivity {
         submitLinearLayout = findViewById(R.id.check_stand_submit_ll);
     }
 
-    public static void startActivity(Context context, double price){
+    public static void startActivity(Context context, double price,String orderId){
         Intent intent = new Intent(context, CheckStandActivity.class);
         intent.putExtra("price",price);
+        intent.putExtra("order",orderId);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        showCheckDialog();
+    }
+
+    private void showCheckDialog(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_check_pay);
+        dialog.show();
+
+        mViewModel.getOrderId().observe(this,orderId->{
+            dialog.findViewById(R.id.check_pay_cancel_btn).setOnClickListener(v->{
+                OrderIntentService.startActionCancel(this,orderId);
+            });
+        });
+        dialog.findViewById(R.id.check_pay_check_btn).setOnClickListener(v->{
+            dialog.dismiss();
+        });
     }
 }

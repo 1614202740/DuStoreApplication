@@ -1,6 +1,7 @@
 package com.dustoreapplication.android.ui.personal.address;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.model.Address;
+import com.dustoreapplication.android.logic.service.AddressIntentService;
+import com.dustoreapplication.android.logic.service.CustomerIntentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +28,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
     private List<Address> addresses;
     private List<AppCompatRadioButton> radioButtons;
+    private Context context;
 
-    public AddressAdapter(List<Address> addresses) {
+    public AddressAdapter(Context context, List<Address> addresses) {
         this.addresses = addresses;
+        this.context = context;
         this.radioButtons = new ArrayList<>();
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -48,6 +58,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             holder.detailTextView.setText(address.getProvince() + address.getCity() + address.getArea() + address.getDetails());
             holder.defaultButton.setChecked(address.getIsDefault());
             holder.defaultButton.setOnClickListener(v -> notifyOtherButtons(position));
+            holder.deleteButton.setOnClickListener(v-> AddressIntentService.startActionDelete(context,address.getAddressId()));
             radioButtons.add(holder.defaultButton);
         }
     }

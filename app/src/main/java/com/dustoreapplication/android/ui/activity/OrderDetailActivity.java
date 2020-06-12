@@ -85,7 +85,13 @@ public class OrderDetailActivity extends AppCompatActivity {
         mViewModel.getTotalPrice().observe(this,price-> {
             totalPriceTextView.setText(String.valueOf(price));
             checkButton.setOnClickListener(v->{
-                CheckStandActivity.startActivity(context,price);
+                CheckStandActivity.startActivity(context,price,mViewModel.getOrderId().getValue());
+                finish();
+            });
+        });
+        mViewModel.getOrderId().observe(this,orderId-> {
+            checkButton.setOnClickListener(v -> {
+                CheckStandActivity.startActivity(context, mViewModel.getTotalPrice().getValue(), orderId);
                 finish();
             });
         });
@@ -110,6 +116,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         if(order!=null) {
             mViewModel.setShipping(order);
             mViewModel.setOrders(order.getItem());
+            mViewModel.setOrderId(order.getOrderId());
         }
         CustomerIntentService.startActionAddress(this, DuApplication.customer.getId());
         registerReceiver(new AddressReceiver(new AddressReceiver.Message() {
@@ -122,7 +129,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             public void onSuccess(Intent intent) {
                 mViewModel.setAddresses(intent.getParcelableArrayListExtra("addresses"));
             }
-        }),new IntentFilter(getString(R.string.address_receiver)));
+        }),new IntentFilter(getString(R.string.address_all_receiver)));
     }
 
     public static void startActivity(Context context, Order order){

@@ -16,6 +16,7 @@ public class CheckStandViewModel extends ViewModel {
     private final MutableLiveData<Double> totalPrice = new MutableLiveData<>();
     private final MutableLiveData<Integer> type = new MutableLiveData<>(0);
     private final MutableLiveData<ArrayList<PayTypeVo>> types = new MutableLiveData<>();
+    private final MutableLiveData<String> orderId = new MutableLiveData<>();
 
     public void setTotalPrice(double price){
         this.totalPrice.setValue(price);
@@ -39,5 +40,12 @@ public class CheckStandViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<PayTypeVo>> getTypes() {
         return types;
+    }
+
+    public void setOrderId(String orderId){
+        this.orderId.setValue(orderId);
+    }
+    public MutableLiveData<String> getOrderId() {
+        return orderId;
     }
 }
