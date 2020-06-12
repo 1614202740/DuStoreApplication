@@ -145,8 +145,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="顺丰速运"
-                    text
+                    android:text="顺丰速运">
+
+                </androidx.appcompat.widget.AppCompatTextView>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

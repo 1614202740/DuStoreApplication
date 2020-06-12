@@ -4,6 +4,8 @@
     package="com.dustoreapplication.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".DuApplication"
@@ -21,6 +23,13 @@
         <activity android:name=".ui.activity.SecurityActivity" />
         <activity android:name=".ui.personal.address.AddressActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.PhotoActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".logic.receiver.CustomerReceiver"
@@ -28,11 +37,11 @@
             android:exported="true" />
 
         <activity android:name=".ui.activity.BootActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
+<!--            <intent-filter>-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
 
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <service

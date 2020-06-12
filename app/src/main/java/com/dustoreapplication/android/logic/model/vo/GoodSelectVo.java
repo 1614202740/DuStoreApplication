@@ -12,4 +12,5 @@ public class GoodSelectVo {
     private double price;
     private int num;
     private String picture;
+
 }
