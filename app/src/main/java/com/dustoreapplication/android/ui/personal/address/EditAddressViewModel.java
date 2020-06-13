@@ -3,20 +3,21 @@ package com.dustoreapplication.android.ui.personal.address;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.logic.model.Address;
 
 /**
  * Created by 16142
  * on 2020/6/12
  */
-public class AddAddressViewModel extends ViewModel {
+public class EditAddressViewModel extends ViewModel {
     private final MutableLiveData<String> name = new MutableLiveData<>();
     private final MutableLiveData<String> phone = new MutableLiveData<>();
     private final MutableLiveData<String> province = new MutableLiveData<>();
     private final MutableLiveData<String> city = new MutableLiveData<>();
     private final MutableLiveData<String> area = new MutableLiveData<>();
     private final MutableLiveData<String> detail = new MutableLiveData<>();
-    public final Address address = new Address();
+    public final Address address = new Address(DuApplication.customer.getId());
 
     public void setPhone(String phone){
         this.phone.setValue(phone);

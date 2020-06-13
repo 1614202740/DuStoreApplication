@@ -47,7 +47,7 @@ public class CommunityFragment extends Fragment {
     private List<Fragment> pages = new ArrayList<>();
 
     {
-        pages.add(RecommendFragment.newInstance("a","b"));
+        pages.add(RecommendFragment.newInstance());
         pages.add(SquareFragment.newInstance("a","b"));
         pages.add(PageFragment.newInstance(colors,1));
         pages.add(PageFragment.newInstance(colors,1));

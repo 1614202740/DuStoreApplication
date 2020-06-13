@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.personal.address.AddAddressActivity"></activity>
+        <activity android:name=".ui.personal.address.EditAddressActivity"></activity>
         <activity android:name=".ui.activity.CheckStandActivity" />
         <activity android:name=".ui.activity.OrderDetailActivity" />
         <activity android:name=".ui.order.OrderActivity" />

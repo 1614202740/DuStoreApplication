@@ -1,17 +1,19 @@
 package com.dustoreapplication.android.ui.personal.address;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.TableRow;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.TableRow;
 
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.service.AddressIntentService;
@@ -22,7 +24,7 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
-public class AddAddressActivity extends AppCompatActivity {
+public class EditAddressActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private AppCompatButton saveButton;
@@ -33,7 +35,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private AppCompatEditText detailEditView;
     private CityPickerView mPicker = new CityPickerView();
 
-    private AddAddressViewModel mViewModel;
+    private EditAddressViewModel mViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                mViewModel.setProvince(s.toString());
+                mViewModel.setPhone(s.toString());
             }
         });
         detailEditView.addTextChangedListener(new TextWatcher() {
@@ -122,7 +124,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void bindData() {
-        mViewModel = new ViewModelProvider(this).get(AddAddressViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(EditAddressViewModel.class);
         mViewModel.getProvince().observe(this, province -> {
             infoTextView.setText(province + mViewModel.getCity().getValue() + mViewModel.getArea().getValue());
             mViewModel.address.setProvince(province);
@@ -139,7 +141,7 @@ public class AddAddressActivity extends AppCompatActivity {
             mViewModel.address.setDetails(detail);
         });
         mViewModel.getName().observe(this, name -> {
-            mViewModel.address.setConsigneeName(name);
+            mViewModel.address.setReceiverName(name);
         });
         mViewModel.getPhone().observe(this,phone->{
             mViewModel.address.setPhone(phone);
@@ -154,5 +156,10 @@ public class AddAddressActivity extends AppCompatActivity {
         infoTableRow = findViewById(R.id.add_address_info_btn);
         infoTextView = findViewById(R.id.add_address_info_tv);
         detailEditView = findViewById(R.id.add_address_detail_ev);
+    }
+
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, EditAddressActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -86,6 +86,7 @@ public class AddressIntentService extends IntentService {
                 .url(LOCAL_URL+ADDRESS_URL)
                 .post(RequestBody.create(new Gson().toJson(address),JSON_TYPE))
                 .build();
+        System.out.println(new Gson().toJson(address));
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

@@ -2,7 +2,6 @@ package com.dustoreapplication.android.ui.personal.address;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
@@ -10,17 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Address;
 import com.dustoreapplication.android.logic.service.CustomerIntentService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author 16142
@@ -53,7 +46,7 @@ public class AddressActivity extends AppCompatActivity {
             }
         },new IntentFilter(getString(R.string.address_all_receiver)));
         floatingActionButton.setOnClickListener(v->{
-
+            EditAddressActivity.startActivity(this);
         });
     }
 

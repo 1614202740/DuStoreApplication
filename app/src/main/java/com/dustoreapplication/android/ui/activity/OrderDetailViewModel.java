@@ -32,7 +32,7 @@ public class OrderDetailViewModel extends ViewModel {
             return;
         }
         ConsigneeVo consigneeVo = new ConsigneeVo();
-        String consigneeName = address.getConsigneeName();
+        String consigneeName = address.getReceiverName();
         consigneeVo.setName(consigneeName==null||consigneeName.length()==0?"匿名":consigneeName);
         consigneeVo.setAddress(address.getProvince()+address.getCity()+address.getArea());
         consigneeVo.setPhone(address.getPhone());
