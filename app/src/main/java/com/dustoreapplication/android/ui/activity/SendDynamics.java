@@ -55,7 +55,7 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.send_dynamics_back:
                 Intent intent = new Intent(SendDynamics.this,PhotoActivity.class);
-                intent.putExtra("modifyList", (Serializable) imageModels);
+                intent.putExtra(" ", (Serializable) imageModels);
                 startActivity(intent);
                 break;
             case R.id.send_dynamics_next:

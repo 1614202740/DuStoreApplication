@@ -20,14 +20,12 @@ public class SelectedPhotoAdapter extends  RecyclerView.Adapter<SelectedPhotoAda
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         SquareImageView photoImage;
-        AppCompatImageView dynamics_photo_button;
 
 
         public ViewHolder (View view)
         {
             super(view);
             photoImage =  view.findViewById(R.id.dynamics_bottom_photo);
-            dynamics_photo_button = view.findViewById(R.id.dynamics_bottom_photo_button);
         }
     }
 
@@ -47,14 +45,6 @@ public class SelectedPhotoAdapter extends  RecyclerView.Adapter<SelectedPhotoAda
     public void onBindViewHolder(@NonNull SelectedPhotoAdapter.ViewHolder holder, int position) {
         Bitmap photo = BitmapFactory.decodeFile(ImageModelList.get(position).getPath());
         holder.photoImage.setImageBitmap(photo);
-        holder.dynamics_photo_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = holder.getAdapterPosition();
-                ImageModelList.remove(ImageModelList.get(position));
-                notifyDataSetChanged();
-            }
-        });
     }
 
     @Override

@@ -20,7 +20,8 @@ import java.util.ArrayList;
  * Created by 16142
  * on 2020/6/10
  */
-public class GoodSelectAdapter extends RecyclerView.Adapter<GoodSelectAdapter.ViewHolder> {
+public class
+GoodSelectAdapter extends RecyclerView.Adapter<GoodSelectAdapter.ViewHolder> {
 
     private ArrayList<GoodSelectVo> data;
 
