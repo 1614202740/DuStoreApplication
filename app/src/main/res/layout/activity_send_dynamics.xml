@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/send_dynamics_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_close_white_24dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/send_dynamics_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text=""
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_gravity="center_vertical" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/send_dynamics_next"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:text="发布"
+            android:textColor="#F6F6F6"
+            android:textSize="18sp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_vertical"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_height = "match_parent"
+        android:layout_width = "match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/send_dynamics_textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="分享你的热爱">
+        </com.google.android.material.textfield.TextInputEditText>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/send_dynamics_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

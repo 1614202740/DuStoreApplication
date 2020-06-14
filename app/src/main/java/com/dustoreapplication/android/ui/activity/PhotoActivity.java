@@ -2,6 +2,7 @@ package com.dustoreapplication.android.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.tool.ContentResolverTool;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +53,14 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dynamics_photo);
         checkStoragePermissions(this);
         imageModels = ContentResolverTool.queryImagesFromExternal(this);
+
+
         selectImages = new ArrayList<>();
         initWidgets();
 
         mViewModel =new ViewModelProvider(this).get(PhotoViewModel.class);
         mViewModel.getSize().observe(this,size->{
             if(size == 0){
-                Log.e("error","111111111111111111");
                 dialog.dismiss();
             }else {
                 showBottomDialog();
@@ -111,7 +114,9 @@ public class PhotoActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("error","123");
+                Intent intent = new Intent(PhotoActivity.this,SendDynamics.class);
+                intent.putExtra("selectedList", (Serializable) selectImages);
+                startActivity(intent);
             }
         });
 
