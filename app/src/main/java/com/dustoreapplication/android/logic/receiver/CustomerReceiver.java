@@ -14,6 +14,11 @@ public class CustomerReceiver extends BroadcastReceiver {
     private final static String ERROR_LOGIN_CODE = "0";
     private final static String SUCCESS_LOGIN_CODE = "1";
     private final static String UNREGISTERED_CODE = "2";
+
+    public CustomerReceiver(Message message){
+        this.message = message;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String status = intent.getStringExtra("status");
@@ -44,9 +49,5 @@ public class CustomerReceiver extends BroadcastReceiver {
          * 当前手机号还未注册
          */
         void onUnregistered();
-    }
-
-    public void setMessage(Message message){
-        this.message = message;
     }
 }

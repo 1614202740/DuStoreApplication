@@ -17,7 +17,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.OrderDetailActivity"></activity>
+        <activity android:name=".ui.personal.address.EditAddressActivity"></activity>
+        <activity android:name=".ui.activity.CheckStandActivity" />
+        <activity android:name=".ui.activity.OrderDetailActivity" />
         <activity android:name=".ui.order.OrderActivity" />
         <activity android:name=".ui.activity.GoodDetailActivity" />
         <activity android:name=".ui.activity.SecurityActivity" />
@@ -37,12 +39,23 @@
             android:exported="true" />
 
         <activity android:name=".ui.activity.BootActivity">
-<!--            <intent-filter>-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
 
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--            </intent-filter>-->
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
+        <activity android:name=".ui.personal.login.LoginActivity" />
+        <activity android:name=".ui.community.recommend.detail.RecommendDetailActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity android:name=".ui.CommunityActivity" />
+
+        <receiver
+            android:name=".logic.receiver.CustomerReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <service
             android:name=".logic.service.CustomerIntentService"
@@ -56,13 +69,12 @@
         <service
             android:name=".logic.service.OrderIntentService"
             android:exported="false" />
-
-        <activity android:name=".ui.personal.login.LoginActivity" />
-        <activity android:name=".ui.community.recommend.detail.RecommendDetailActivity" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main" />
-        <activity android:name=".ui.CommunityActivity" />
+        <service
+            android:name=".logic.service.AddressIntentService"
+            android:exported="false" />
+        <service
+            android:name=".logic.service.DynamicIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>

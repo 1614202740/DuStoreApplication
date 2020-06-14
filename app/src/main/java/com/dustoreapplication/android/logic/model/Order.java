@@ -37,12 +37,9 @@ public class Order implements Parcelable {
     private String shippingId;
     private String buyerMessage;
     private boolean buyerComment;
-    @Expose
     private ArrayList<OrderItem> item;
-    @Expose
     private OrderShipping shipping;
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     protected Order(Parcel in) {
         orderId = in.readString();
         userId = in.readString();
@@ -60,9 +57,7 @@ public class Order implements Parcelable {
         shippingId = in.readString();
         buyerMessage = in.readString();
         buyerComment = in.readByte() != 0;
-        item = in.createTypedArrayList(OrderItem.CREATOR);
-        shipping = in.readParcelable(OrderShipping.class.getClassLoader());
-        in.readParcelableList(item,OrderItem.class.getClassLoader());
+        item = in.readArrayList(OrderItem.class.getClassLoader());
         shipping = in.readParcelable(OrderShipping.class.getClassLoader());
     }
 
@@ -84,7 +79,6 @@ public class Order implements Parcelable {
         return 0;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(orderId);
@@ -103,9 +97,7 @@ public class Order implements Parcelable {
         dest.writeString(shippingId);
         dest.writeString(buyerMessage);
         dest.writeByte((byte) (buyerComment ? 1 : 0));
-        dest.writeTypedList(item);
-        dest.writeParcelable(shipping, flags);
-        dest.writeParcelableList(item,OrderItem.PARCELABLE_WRITE_RETURN_VALUE);
+        dest.writeList(item);
         dest.writeParcelable(shipping,OrderShipping.PARCELABLE_WRITE_RETURN_VALUE);
     }
 }

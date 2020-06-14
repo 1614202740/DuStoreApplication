@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.dustoreapplication.android.logic.model.Evaluation;
 import com.dustoreapplication.android.logic.model.EvaluationInfo;
 import com.dustoreapplication.android.logic.model.Good;
+import com.dustoreapplication.android.logic.model.Order;
 import com.dustoreapplication.android.logic.model.vo.GoodSelectVo;
 import com.dustoreapplication.android.logic.model.vo.SkuVo;
 

@@ -1,7 +1,7 @@
 package com.dustoreapplication.android.ui.personal.address;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
@@ -9,16 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Address;
 import com.dustoreapplication.android.logic.service.CustomerIntentService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * @author 16142
@@ -26,31 +21,44 @@ import java.util.Objects;
 public class AddressActivity extends AppCompatActivity {
 
     private RecyclerView infoRecyclerView;
-    private List<Address> addresses = new ArrayList<>();
-    private AddressAdapter adapter;
+    private FloatingActionButton floatingActionButton;
+
+    private AddressAdapter mAdapter;
+    private AddressViewModel mViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
         initView();
+        mViewModel = new ViewModelProvider(this).get(AddressViewModel.class);
+        mViewModel.getAddressed().observe(this,addresses->{
+            if(mAdapter==null){
+                mAdapter = new AddressAdapter(this,addresses);
+                infoRecyclerView.setAdapter(mAdapter);
+            }else{
+                mAdapter.setAddresses(addresses);
+            }
+        });
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                addresses.clear();
-                for (Parcelable address: Objects.requireNonNull(intent.getParcelableArrayListExtra("addresses"))){
-                    addresses.add((Address)address);
-                }
-                adapter.notifyDataSetChanged();
+                mViewModel.setAddressed(intent.getParcelableArrayListExtra("addresses"));
             }
-        },new IntentFilter(getString(R.string.address_receiver)));
+        },new IntentFilter(getString(R.string.address_all_receiver)));
+        floatingActionButton.setOnClickListener(v->{
+            EditAddressActivity.startActivity(this);
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         CustomerIntentService.startActionAddress(this, DuApplication.customer.getId());
-        infoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AddressAdapter(addresses);
-        infoRecyclerView.setAdapter(adapter);
     }
 
     private void initView(){
         infoRecyclerView = findViewById(R.id.address_info_rv);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
     }
 
     public static void startActivity(Context context){

@@ -59,4 +59,6 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombok_version"
     annotationProcessor "org.projectlombok:lombok:$lombok_version"
     testAnnotationProcessor "org.projectlombok:lombok:$lombok_version"
+
+    implementation 'liji.library.dev:citypickerview:3.1.13'
 }

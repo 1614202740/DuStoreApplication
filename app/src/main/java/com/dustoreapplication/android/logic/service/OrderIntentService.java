@@ -41,7 +41,7 @@ public class OrderIntentService extends IntentService {
     private static final String LOCAL_URL = DuApplication.LOCAL_HOST;
     private static final String ORDER_URL = "/order";
 
-    private static final String ACTION_NEW= "com.dustoreapplication.android.logic.action.NEW";
+    private static final String ACTION_NEW = "com.dustoreapplication.android.logic.action.NEW";
     private static final String ACTION_SEARCH_INFO = "com.dustoreapplication.android.logic.action.INFO";
     private static final String ACTION_SEARCH_ALL= "com.dustoreapplication.android.logic.action.ALL";
     private static final String ACTION_SEARCH_PAGE = "com.dustoreapplication.android.logic.action.PAGE";
@@ -65,6 +65,13 @@ public class OrderIntentService extends IntentService {
         context.startService(intent);
     }
 
+    public static void startActionCancel(Context context, String orderId){
+        Intent intent = new Intent(context,OrderIntentService.class);
+        intent.setAction(ACTION_CANCEL);
+        intent.putExtra("orderId",orderId);
+        context.startService(intent);
+    }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         if(intent==null||DuApplication.token==null){
@@ -75,6 +82,8 @@ public class OrderIntentService extends IntentService {
             handleActionNew(intent.getParcelableExtra("order"));
         }else if(ACTION_SEARCH_ALL.equals(action)){
             handleActionSearchAll(intent.getStringExtra("userId"));
+        }else if(ACTION_CANCEL.equals(action)){
+            handleActionCancel(intent.getStringExtra("orderId"));
         }
     }
 
@@ -92,15 +101,35 @@ public class OrderIntentService extends IntentService {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Intent intent = new Intent(getString(R.string.order_new_receiver));
-                intent.putExtra("status",0);
+                intent.putExtra("status","0");
                 sendBroadcast(intent);
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Intent intent = new Intent(getString(R.string.order_new_receiver));
-                intent.putExtra("status",1);
-                sendBroadcast(intent);
+                String body = response.body().string();
+                Order order = null;
+                ArrayList<OrderItem> orderItems = new ArrayList<>();
+                OrderShipping shipping = null;
+                try{
+                    JSONObject items = new JSONObject(body).getJSONObject("data").getJSONObject("items");
+                    order = new Gson().fromJson(items.getJSONObject("order").toString(),Order.class);
+                    JSONArray ordersArray = items.getJSONArray("orderItems");
+                    for(int i=0; i<ordersArray.length(); ++i){
+                        OrderItem orderItem = new Gson().fromJson(ordersArray.getJSONObject(i).toString(),OrderItem.class);
+                        orderItems.add(orderItem);
+                    }
+                    shipping = new Gson().fromJson(items.getJSONObject("orderShipping").toString(),OrderShipping.class);
+                    order.setItem(orderItems);
+                    order.setShipping(shipping);
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }finally {
+                    Intent intent = new Intent(getString(R.string.order_new_receiver));
+                    intent.putExtra("status","1");
+                    intent.putExtra("order",order);
+                    sendBroadcast(intent);
+                }
             }
         });
     }
@@ -155,7 +184,26 @@ public class OrderIntentService extends IntentService {
 
     }
 
-    private void handleActionCancel(){
+    private void handleActionCancel(String orderId){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header("token",DuApplication.token).url(LOCAL_URL+ORDER_URL+"/cancel/"+orderId)
+                .put(RequestBody.create("",MediaType.parse("application/json; charset=utf-8")))
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Intent intent = new Intent(getString(R.string.order_cancel_receiver));
+                intent.putExtra("status","0");
+                sendBroadcast(intent);
+            }
 
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                Intent intent = new Intent(getString(R.string.order_cancel_receiver));
+                intent.putExtra("status","1");
+                sendBroadcast(intent);
+            }
+        });
     }
 }
