@@ -10,7 +10,8 @@
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/send_dynamics_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/ic_close_white_24dp"
@@ -18,8 +19,7 @@
             android:layout_gravity="center_vertical" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/send_dynamics_back"
-            android:layout_width="0dp"
+                        android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:text=""
@@ -36,7 +36,7 @@
             android:background="@color/colorAccent"
             android:text="发布"
             android:textColor="#F6F6F6"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginRight="16dp"
             android:layout_gravity="center_vertical"/>
     </androidx.appcompat.widget.LinearLayoutCompat>

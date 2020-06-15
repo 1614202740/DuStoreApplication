@@ -2,12 +2,15 @@ package com.dustoreapplication.android.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SendDynamics extends AppCompatActivity implements View.OnClickListener {
-    private AppCompatTextView back;
+    private AppCompatImageView back;
     private AppCompatButton next;
     private TextInputEditText textInputEditText;
     private RecyclerView mRecyclerView;
@@ -32,9 +35,8 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_dynamics);
+        imageModels = (List<ImageModel>) getIntent().getSerializableExtra("selectedList");
         initWidgets();
-        imageModels = (ArrayList) getIntent().getSerializableExtra("selectedList");
-
     }
 
     private void initWidgets(){
@@ -43,10 +45,11 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
         textInputEditText = findViewById(R.id.send_dynamics_textInputEditText);
         back.setOnClickListener(this);
         next.setOnClickListener(this);
-        mRecyclerView = findViewById(R.id.dynamics_photo_recyclerView);
+        mRecyclerView = findViewById(R.id.send_dynamics_recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         sendPhotoAdapter = new SendPhotoAdapter(imageModels);
         mRecyclerView.setAdapter(sendPhotoAdapter);
+
     }
 
 
@@ -55,7 +58,7 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.send_dynamics_back:
                 Intent intent = new Intent(SendDynamics.this,PhotoActivity.class);
-                intent.putExtra(" ", (Serializable) imageModels);
+                intent.putExtra("selectedList", (Serializable) imageModels);
                 startActivity(intent);
                 break;
             case R.id.send_dynamics_next:

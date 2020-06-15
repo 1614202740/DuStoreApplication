@@ -2,21 +2,11 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp">
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <com.dustoreapplication.android.view.SquareImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:id="@+id/dynamics_bottom_photo" />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/dynamics_bottom_photo_button"
-            android:layout_gravity="end"
-            android:background="@drawable/ic_close_black_24dp"/>
-    </FrameLayout>
+    android:layout_margin="4dp">
+
+    <com.dustoreapplication.android.view.SquareImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:scaleType="fitXY"
+        android:id="@+id/dynamics_bottom_photo" />
 </androidx.appcompat.widget.LinearLayoutCompat>

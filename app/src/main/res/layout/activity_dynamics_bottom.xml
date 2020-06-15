@@ -2,16 +2,17 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:layout_height="match_parent">
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dynamics_bottom_textView"
@@ -19,18 +20,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="已选 0/6"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
                 android:textColor="#F6F6F6">
             </androidx.appcompat.widget.AppCompatTextView>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dynamics_bottom_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="28dp"
                 android:background="@color/colorAccent"
                 android:text="下一步"
                 android:textColor="#F6F6F6"
-                android:textSize="20sp"
-                android:layout_gravity="end">
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical">
             </androidx.appcompat.widget.AppCompatButton>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

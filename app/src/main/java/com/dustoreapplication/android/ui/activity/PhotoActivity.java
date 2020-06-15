@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,11 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.WindowCallbackWrapper;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,6 +36,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 
 public class PhotoActivity extends AppCompatActivity {
     private  static final int REQUEST_EXTERNAL_STORAGE=1;
@@ -39,12 +46,17 @@ public class PhotoActivity extends AppCompatActivity {
             "android.permission.WRITE_EXTERNAL_STORAGE" };
     private List<ImageModel> imageModels;
     private List<ImageModel> selectImages;
-    private Dialog dialog;
 
     private RecyclerView mRecyclerView;
     private PhotoAdapter photoAdapter;
-
     private PhotoViewModel mViewModel;
+
+    private RecyclerView bRecyclerView;
+    private SelectedPhotoAdapter selectedPhotoAdapter;
+
+    private AppCompatButton next;
+    private LinearLayoutCompat linearLayoutCompat;
+    private AppCompatTextView textView;
 
 
     @Override
@@ -61,10 +73,13 @@ public class PhotoActivity extends AppCompatActivity {
         mViewModel =new ViewModelProvider(this).get(PhotoViewModel.class);
         mViewModel.getSize().observe(this,size->{
             if(size == 0){
-                dialog.dismiss();
+                linearLayoutCompat.setVisibility(GONE);
             }else {
-                showBottomDialog();
+                linearLayoutCompat.setVisibility(View.VISIBLE);
+                selectedPhotoAdapter = new SelectedPhotoAdapter(selectImages);
+                bRecyclerView.setAdapter(selectedPhotoAdapter);
             }
+            textView.setText("已选" + size + "/6");
         });
 
     }
@@ -74,7 +89,25 @@ public class PhotoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         photoAdapter = new PhotoAdapter(imageModels,selectImages,this);
         mRecyclerView.setAdapter(photoAdapter);
-        dialog = new Dialog(this,R.style.FullScreenDialogStyle);
+
+        linearLayoutCompat =  findViewById(R.id.dynamics_bottom_include);
+        bRecyclerView = findViewById(R.id.dynamics_bottom_recyclerView);
+        bRecyclerView.setLayoutManager(new LinearLayoutManager(this){{
+            setOrientation(LinearLayoutManager.HORIZONTAL);
+        }});
+        selectedPhotoAdapter = new SelectedPhotoAdapter(selectImages);
+        bRecyclerView.setAdapter(selectedPhotoAdapter);
+        textView =  findViewById(R.id.dynamics_bottom_textView);
+
+        next = findViewById(R.id.dynamics_bottom_button);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PhotoActivity.this,SendDynamics.class);
+                intent.putExtra("selectedList", (Serializable) selectImages);
+                startActivity(intent);
+            }
+        });
     }
 
     public static void checkStoragePermissions(Activity activity){
@@ -96,38 +129,6 @@ public class PhotoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
-    private void showBottomDialog(){
-        View view = LayoutInflater.from(this).inflate(R.layout.activity_dynamics_bottom,null);
-        dialog.setContentView(view);
-        RecyclerView bRecyclerView = dialog.findViewById(R.id.dynamics_bottom_recyclerView);
-        bRecyclerView.setLayoutManager(new LinearLayoutManager(this){{
-            setOrientation(LinearLayoutManager.HORIZONTAL);
-        }});
-        SelectedPhotoAdapter selectedPhotoAdapter = new SelectedPhotoAdapter(selectImages);
-        bRecyclerView.setAdapter(selectedPhotoAdapter);
-        dialog.setCanceledOnTouchOutside(false);
-
-        AppCompatButton button = dialog.findViewById(R.id.dynamics_bottom_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PhotoActivity.this,SendDynamics.class);
-                intent.putExtra("selectedList", (Serializable) selectImages);
-                startActivity(intent);
-            }
-        });
-
-        Window window = dialog.getWindow();
-        if(window != null){
-            window.setGravity(Gravity.BOTTOM);
-            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-            dialog.show();
-        }
-    }
-
 
 
 }

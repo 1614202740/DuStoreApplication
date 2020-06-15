@@ -17,7 +17,7 @@ import java.util.List;
 
 class SendPhotoAdapter extends RecyclerView.Adapter<SendPhotoAdapter.ViewHolder>{
 
-    private List<ImageModel> ImageModelList;
+    private List<ImageModel> imageModelList;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -31,7 +31,7 @@ class SendPhotoAdapter extends RecyclerView.Adapter<SendPhotoAdapter.ViewHolder>
     }
 
     public SendPhotoAdapter(List<ImageModel> ImageModelList){
-        this.ImageModelList = ImageModelList;
+        this.imageModelList = ImageModelList;
     }
 
     @NonNull
@@ -44,12 +44,12 @@ class SendPhotoAdapter extends RecyclerView.Adapter<SendPhotoAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull SendPhotoAdapter.ViewHolder holder, int position) {
-        Bitmap photo = BitmapFactory.decodeFile(ImageModelList.get(position).getPath());
+        Bitmap photo = BitmapFactory.decodeFile(imageModelList.get(position).getPath());
         holder.photoImage.setImageBitmap(photo);
     }
 
     @Override
     public int getItemCount() {
-        return ImageModelList.size();
+        return imageModelList.size();
     }
 }

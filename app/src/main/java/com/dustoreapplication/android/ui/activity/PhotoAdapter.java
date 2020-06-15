@@ -67,10 +67,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 if(ImageModelList.get(position).isSelected() == false){
-                    ImageModelList.get(position).setSelected(true);
-                    Glide.with(holder.itemView).load(R.drawable.shape_photo_select).into(holder.dynamics_photo_button);
-                    selectImageList.add(ImageModelList.get(position));
-                    mViewModel.addSize();
+                    if(selectImageList.size() < 6){
+                        ImageModelList.get(position).setSelected(true);
+                        Glide.with(holder.itemView).load(R.drawable.shape_photo_select).into(holder.dynamics_photo_button);
+                        selectImageList.add(ImageModelList.get(position));
+                        mViewModel.addSize();
+                    }
                 }else{
                     ImageModelList.get(position).setSelected(false);
                     Glide.with(holder.itemView).load(R.drawable.shape_photo_cancel).into(holder.dynamics_photo_button);

@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="1dp">
         <com.dustoreapplication.android.view.SquareImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:scaleType="fitXY"
             android:id="@+id/dynamics_bottom_photo" />
 
