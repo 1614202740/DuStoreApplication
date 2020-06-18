@@ -1,5 +1,6 @@
 package com.dustoreapplication.android.ui.personal;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -36,6 +37,10 @@ public class PersonalFragment extends Fragment {
     private AppCompatImageButton settingImageButton;
     private LinearLayoutCompat orderLinearLayout;
 
+    private LinearLayoutCompat payButton;
+    private LinearLayoutCompat shipmentsButton;
+    private LinearLayoutCompat receivingButton;
+
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -43,6 +48,9 @@ public class PersonalFragment extends Fragment {
         taskImageView = root.findViewById(R.id.personal_welfare_task_iv);
         settingImageButton = root.findViewById(R.id.personal_toolbar_setting_btn);
         orderLinearLayout = root.findViewById(R.id.personal_purchase_order_btn);
+        payButton = root.findViewById(R.id.personal_purchase_pay_btn);
+        shipmentsButton = root.findViewById(R.id.personal_purchase_shipments_btn);
+        receivingButton = root.findViewById(R.id.personal_purchase_receiving_btn);
     }
 
     public PersonalFragment() {
@@ -71,13 +79,16 @@ public class PersonalFragment extends Fragment {
         fragmentTransaction = fragmentManager.beginTransaction();
         if(DuApplication.customer!=null) {
             fragmentTransaction.replace(R.id.personal_info_fl, IsLoggedInFragment.newInstance());
-            orderLinearLayout.setOnClickListener(v->OrderActivity.startActivity(this.getContext()));
+            orderLinearLayout.setOnClickListener(v->OrderActivity.startActivity(this.getContext(),0));
         }else {
             fragmentTransaction.replace(R.id.personal_info_fl, NotLoggedInFragment.newInstance());
             orderLinearLayout.setOnClickListener(v->LoginActivity.startActivity(this.getContext()));
         }
         fragmentTransaction.commit();
         settingImageButton.setOnClickListener(v->startActivity(new Intent(this.getActivity(), SettingActivity.class)));
+        payButton.setOnClickListener(v->OrderActivity.startActivity(this.getContext(),1));
+        shipmentsButton.setOnClickListener(v->OrderActivity.startActivity(this.getContext(),2));
+        receivingButton.setOnClickListener(v->OrderActivity.startActivity(this.getContext(),3));
         return view;
     }
 }

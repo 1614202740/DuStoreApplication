@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Customer;
+import com.dustoreapplication.android.logic.model.bean.Customer;
 import com.dustoreapplication.android.logic.receiver.CustomerReceiver;
 import com.dustoreapplication.android.ui.personal.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -1,47 +1,55 @@
 package com.dustoreapplication.android.ui.personal.login;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.receiver.CustomerReceiver;
 import com.dustoreapplication.android.logic.service.CustomerIntentService;
 import com.dustoreapplication.android.ui.MainActivity;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 /**
  * @author 16142
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private AppCompatImageButton cancelButton;
+    private Toolbar mToolbar;
     private LinearLayoutCompat areaChangeButton;
     private AppCompatEditText phoneEditText;
     private AppCompatEditText codeEditText;
     private AppCompatButton sendCodeButton;
     private AppCompatButton determineButton;
     private AppCompatTextView errorTextView;
+    private DialogPlus registerDialog;
 
     private boolean hasPhone = false;
     private boolean hasCode = false;
 
     private LoginViewModel viewModel;
+    private RegisterViewModel registerViewModel;
 
     private CustomerReceiver mReceiver;
 
@@ -52,12 +60,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         if(viewModel.getPhone()!=null&&viewModel.getCode()!=null) {
             viewModel.getPhone().observe(this, phone -> phoneEditText.setText(phone));
             viewModel.getCode().observe(this, code -> codeEditText.setText(code));
         }
-        cancelButton.setOnClickListener(v -> startActivity(new Intent(this,MainActivity.class)));
         phoneEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onUnregistered() {
-
+                showRegisterDialog();
             }
         });
     }
@@ -143,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        cancelButton = findViewById(R.id.login_cancel_btn);
+        mToolbar = findViewById(R.id.toolbar);
         areaChangeButton = findViewById(R.id.login_change_area_btn);
         phoneEditText = findViewById(R.id.login_phone_ev);
         codeEditText = findViewById(R.id.login_code_ev);
@@ -155,5 +166,44 @@ public class LoginActivity extends AppCompatActivity {
     public static void startActivity(Context context){
         Intent intent = new Intent(context,LoginActivity.class);
         context.startActivity(intent);
+    }
+
+    private void showRegisterDialog(){
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_check_register,null);
+        CheckBox checkBox = view.findViewById(R.id.check_register_cb);
+        AppCompatButton button = view.findViewById(R.id.check_register_btn);
+
+//        button.setOnClickListener(v->{
+//            CustomerIntentService.startActionRegister(context,"18179452183");
+//        });
+
+//        registerViewModel.getPhone().observe(this,phone->{
+//            button.setOnClickListener(v->{
+//                CustomerIntentService.startActionRegister(context,phone);
+//            });
+//        });
+        registerViewModel.getCheckRegister().observe(this, button::setEnabled);
+        registerViewModel.setPhone(viewModel.getPhone().getValue());
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> registerViewModel.setCheckRegister(isChecked));
+        registerDialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(view))
+                .setGravity(Gravity.CENTER)
+                .setContentBackgroundResource(android.R.color.transparent)
+                .setOnClickListener((dialogPlus,v)->{
+                    switch (v.getId()){
+                        case R.id.check_register_btn:{
+                            CustomerIntentService.startActionRegister(context,registerViewModel.getPhone().getValue());
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                })
+                .create();
+        registerDialog.show();
+    }
+
+    public void onClick(View v){
+        System.out.println("Test");
     }
 }

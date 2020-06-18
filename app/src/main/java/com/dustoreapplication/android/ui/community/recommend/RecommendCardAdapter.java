@@ -1,10 +1,8 @@
 package com.dustoreapplication.android.ui.community.recommend;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -14,9 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.ui.community.recommend.detail.RecommendDetailActivity;
+import com.dustoreapplication.android.logic.model.bean.Dynamic;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,10 +27,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecommendCardAdapter extends RecyclerView.Adapter<RecommendCardAdapter.ViewHolder>{
 
     private OnItemClickListener listener;
-    public String username = "鹿其鹿璘";
+    private ArrayList<Dynamic> dynamics;
+
+    public void setDynamics(ArrayList<Dynamic> dynamics) {
+        this.dynamics = dynamics;
+    }
 
     public interface OnItemClickListener{
         void onClick(int position);
+    }
+
+    public RecommendCardAdapter(ArrayList<Dynamic> dynamics){
+        this.dynamics = dynamics;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,24 +73,27 @@ public class RecommendCardAdapter extends RecyclerView.Adapter<RecommendCardAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(holder.cardImageView).load(R.mipmap.topic_title_test).into(holder.cardImageView);
-        holder.cardTitleTextView.setText("#Converse x golf le fleur # 海盐奶油巧克力的香味");
-        holder.goodImageButton.setOnClickListener(v -> {
-            v.setBackgroundResource(R.drawable.ic_good_fill_red_24dp);
-        });
-        Glide.with(holder.publisherHeadCircleImageView).load(R.mipmap.topic_title_test).into(holder.publisherHeadCircleImageView);
-        holder.publisherNameTextView.setText(username);
-        holder.goodCountTextView.setText("453");
-        holder.cardImageView.setOnClickListener(v->{
-            if(listener!=null) {
-                listener.onClick(position);
-            }
-        });
+        Dynamic dynamic = dynamics.get(position);
+        if(dynamic!=null) {
+            Glide.with(holder.cardImageView).load(dynamic.getImageUrl()[0]).into(holder.cardImageView);
+            holder.cardTitleTextView.setText(dynamic.getTitle());
+            holder.goodImageButton.setOnClickListener(v -> {
+                v.setBackgroundResource(R.drawable.ic_good_fill_red_24dp);
+            });
+            Glide.with(holder.publisherHeadCircleImageView).load(dynamic.getUserVo().getAvatar()).into(holder.publisherHeadCircleImageView);
+            holder.publisherNameTextView.setText(dynamic.getUserVo().getUsername());
+            holder.goodCountTextView.setText(String.valueOf(dynamic.getLikeCount()));
+            holder.cardImageView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onClick(position);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return dynamics==null?0:dynamics.size();
     }
 
     public void setListener(OnItemClickListener listener) {

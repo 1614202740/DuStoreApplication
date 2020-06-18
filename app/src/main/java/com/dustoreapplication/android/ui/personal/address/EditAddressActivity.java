@@ -26,7 +26,7 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 
 public class EditAddressActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private AppCompatButton saveButton;
     private AppCompatEditText nameEditView;
     private AppCompatEditText phoneEditView;
@@ -118,7 +118,8 @@ public class EditAddressActivity extends AppCompatActivity {
     }
 
     private void initActionbar(){
-        setSupportActionBar(toolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -149,7 +150,7 @@ public class EditAddressActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        toolbar = findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         saveButton = findViewById(R.id.add_address_save_btn);
         nameEditView = findViewById(R.id.add_address_name_ev);
         phoneEditView = findViewById(R.id.add_address_phone_ev);

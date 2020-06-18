@@ -1,4 +1,4 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.bean;
 
 /**
  * Created by 16142

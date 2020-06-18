@@ -1,11 +1,9 @@
 package com.dustoreapplication.android.ui.community.recommend.detail;
 
 import android.content.Context;
-import android.telephony.RadioAccessSpecifier;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -15,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
-
-import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,7 +24,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
 
     private Context context = null;
-    private int size = new Random().nextInt(5);
+    private int size;
+
+    public CommentListAdapter(int size) {
+        this.size = size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+        notifyDataSetChanged();
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView headCircleImageView;

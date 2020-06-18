@@ -1,9 +1,11 @@
 package com.dustoreapplication.android.ui.community.recommend;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -15,6 +17,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
+import com.dustoreapplication.android.logic.receiver.DynamicReceiver;
+import com.dustoreapplication.android.logic.service.DynamicIntentService;
 import com.dustoreapplication.android.ui.community.recommend.detail.RecommendDetailActivity;
 
 import java.util.ArrayList;
@@ -32,14 +36,15 @@ public class RecommendFragment extends Fragment {
 
     private RecyclerView cardRecyclerView;
 
+    private RecommendCardAdapter mAdapter;
+    private RecommendViewModel mViewModel;
+
     public RecommendFragment() {
         // Required empty public constructor
     }
 
     public static RecommendFragment newInstance() {
         RecommendFragment fragment = new RecommendFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -56,13 +61,32 @@ public class RecommendFragment extends Fragment {
         initTopic(view);
         initView(view);
 
-        RecommendCardAdapter adapter = new RecommendCardAdapter();
-        adapter.setListener(position -> {
-            Intent intent = new Intent(getActivity(), RecommendDetailActivity.class);
-            intent.putExtra("publisher_name",adapter.username);
-            startActivity(intent);
+        mViewModel = new ViewModelProvider(requireActivity()).get(RecommendViewModel.class);
+        DynamicIntentService.startActionSearchAll(this.getContext());
+        this.getContext().registerReceiver(new DynamicReceiver(new DynamicReceiver.Message() {
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onSuccess(Intent intent) {
+                mViewModel.setDynamics(intent.getParcelableArrayListExtra("dynamics"));
+            }
+        }),new IntentFilter(getString(R.string.dynamic_all_receiver)));
+        mViewModel.getDynamics().observe(getViewLifecycleOwner(),dynamics -> {
+            if(mAdapter==null){
+                mAdapter = new RecommendCardAdapter(dynamics);
+                cardRecyclerView.setAdapter(mAdapter);
+                mAdapter.setListener(position -> {
+                    Intent intent = new Intent(getActivity(), RecommendDetailActivity.class);
+                    intent.putExtra("dynamic",dynamics.get(position));
+                    startActivity(intent);
+                });
+            }else {
+                mAdapter.setDynamics(dynamics);
+            }
         });
-        cardRecyclerView.setAdapter(adapter);
         cardRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
         return view;

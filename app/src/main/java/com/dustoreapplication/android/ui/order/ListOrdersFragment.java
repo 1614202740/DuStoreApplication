@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Order;
+import com.dustoreapplication.android.logic.model.bean.Order;
 
 import java.util.ArrayList;
 

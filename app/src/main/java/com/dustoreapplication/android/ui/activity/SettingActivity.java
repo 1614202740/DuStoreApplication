@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class SettingActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     private SettingButton addressButton;
     private SettingButton securityButton;
@@ -25,14 +25,15 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         initView();
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setNavigationOnClickListener(v->finish());
         addressButton.setOnClickListener(v->startActivity(new Intent(this, AddressActivity.class)));
         securityButton.setOnClickListener(v->startActivity(new Intent(this,SecurityActivity.class)));
     }
 
     private void initView(){
-        toolbar = findViewById(R.id.setting_toolbar);
+        mToolbar = findViewById(R.id.setting_toolbar);
         addressButton = findViewById(R.id.setting_address_btn);
         securityButton = findViewById(R.id.setting_security_btn);
     }

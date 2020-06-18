@@ -13,7 +13,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Good;
+import com.dustoreapplication.android.logic.model.bean.Good;
 
 /**
  * Created by 16142

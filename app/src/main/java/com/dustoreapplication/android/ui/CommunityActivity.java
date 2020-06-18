@@ -40,7 +40,7 @@ public class CommunityActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return PageFragment.newInstance(colors,position);
+                return PageFragment.newInstance();
             }
 
             @Override

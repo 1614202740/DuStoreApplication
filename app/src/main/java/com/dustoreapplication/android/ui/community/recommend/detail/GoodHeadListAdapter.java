@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
-
-import java.util.List;
+import com.dustoreapplication.android.logic.model.bean.LikeCustomer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,10 +20,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class GoodHeadListAdapter extends RecyclerView.Adapter<GoodHeadListAdapter.ViewHolder> {
 
-    List<Integer> resources;
+    private LikeCustomer[] resources;
 
-    public GoodHeadListAdapter(List<Integer> resources){
+    public GoodHeadListAdapter(LikeCustomer[] resources){
         this.resources = resources;
+    }
+
+    public void setResources(LikeCustomer[] resources) {
+        this.resources = resources;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,11 +48,11 @@ public class GoodHeadListAdapter extends RecyclerView.Adapter<GoodHeadListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(holder.itemView).load(resources.get(position)).into(holder.goodHeadCircleImageView);
+        Glide.with(holder.itemView).load(resources[position].getAvatar()).into(holder.goodHeadCircleImageView);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return resources==null?0:resources.length;
     }
 }

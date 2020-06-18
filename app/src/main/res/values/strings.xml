@@ -12,6 +12,7 @@
     <string name="skip">跳过</string>
     <string name="local_host">192.168.1.103:9001</string>
     <string name="customer_receiver">com.dustoreapplication.android.logic.CUSTOMER_RECEIVER</string>
+    <string name="customer_register_receiver">com.dustoreapplication.android.logic.CUSTOMER_REGISTER_RECEIVER</string>
     <string name="address_all_receiver">com.dustoreapplication.android.logic.ADDRESS_ALL_RECEIVER</string>
     <string name="address_new_receiver">com.dustoreapplication.android.logic.ADDRESS_NEW_RECEIVER</string>
     <string name="good_all_receiver">com.dustoreapplication.android.logic.GOOD_ALL_RECEIVER</string>
@@ -23,6 +24,8 @@
     <string name="order_new_receiver">com.dustoreapplication.android.logic.ORDER_NEW_RECEIVER</string>
     <string name="order_cancel_receiver">com.dustoreapplication.android.logic.ORDER_CANCEL_RECEIVER</string>
     <string name="good_select_receiver">com.dustoreapplication.android.logic.GOOD_SELECT_RECEIVER</string>
+    <string name="dynamic_all_receiver">com.dustoreapplication.android.logic.DYNAMIC_ALL_RECEIVER</string>
+    <string name="dynamic_new_receiver">com.dustoreapplication.android.logic.DYNAMIC_NEW_RECEIVER</string>
 
     <string name="not_logged_in_prompt">登录后继续操作</string>
     <string name="error_code_login_prompt">账号或验证码错误</string>
@@ -53,4 +56,15 @@
     <string name="good_detail_collection">收藏</string>
     <string name="good_detail_sell">出售</string>
     <string name="good_detail_buy">立即购买</string>
+
+    <string name="version">2.3.1</string>
+    <string name="customer_register_protocol">\t\t《许可及服务协议》（以下简称“本协议”）由您与服务提供方共同缔结，
+        本协议具有合同效力。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制本人责任的条款（以下称“免责条款”）
+        、对用户权利进行限制的条款（以下称“限制条款”）、约定争议解决方式和司法管辖的条款，以及开通或使用某项服务的单独
+        协议。前述免责、限制及争议解决方式和管辖条款可能以黑体加粗、颜色标记或其他合理方式提示您注意，包括但不限于本协
+        议第二条、第三条、第四条、第六条、第九条等相关条款，您对该等条款的确认将可能导致您在特定情况下的被动、不便、损
+        失，请您在确认同意本协议之前或在使用服务之前再次阅读前述条款。双方确认前述条款并非属于《合同法》第40条规定的“免
+        除其责任、加重对方责任、排除对方主要权利的”的条款，并同意该条款的合法性及有效性。 除非您已阅读并接受本协议所有条
+        款，否则您无权使用服务。如果您对本协议或服务有意见或建议，可与本人客户服务部门联系，我们会给予您必要的帮助。您点
+        击同意、接受或下一步，或您注册、使用服务均视为您已阅读并同意签署本协议。</string>
 </resources>

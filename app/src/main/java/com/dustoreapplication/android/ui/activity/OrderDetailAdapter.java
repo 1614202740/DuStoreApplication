@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.OrderItem;
+import com.dustoreapplication.android.logic.model.bean.OrderItem;
 
 import java.util.ArrayList;
 

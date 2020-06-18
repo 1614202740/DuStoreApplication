@@ -4,14 +4,15 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.manager.CustomerManager;
-import com.dustoreapplication.android.logic.model.Address;
-import com.dustoreapplication.android.logic.model.Customer;
+import com.dustoreapplication.android.logic.model.bean.Address;
+import com.dustoreapplication.android.logic.model.bean.Customer;
 import com.dustoreapplication.android.tool.ImageTool;
 import com.google.gson.Gson;
 
@@ -26,8 +27,10 @@ import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -45,10 +48,13 @@ public class CustomerIntentService extends IntentService {
     private static final String USER_URL = "/user";
     private static final String CODE_URL = "/code";
     private static final String ADDRESS_URL = "/address";
+    private static final String REGISTER_URL = "/register";
 
     private static final String ACTION_LOGIN = "com.dustoreapplication.android.logic.action.LOGIN";
     private static final String ACTION_CODE = "com.dustoreapplication.android.logic.action.CODE";
     private static final String ACTION_ADDRESS = "com.dustoreapplication.android.logic.action.ADDRESS";
+    private static final String ACTION_REGISTER = "com.dustoreapplication.android.logic.action.REGISTER";
+    private static final String ACTION_EDIT = "com.dustoreapplication.android.logic.action.EDIT";
 
     public CustomerIntentService() {
         super("CustomerIntentService");
@@ -85,6 +91,20 @@ public class CustomerIntentService extends IntentService {
         context.startService(intent);
     }
 
+    public static void startActionRegister(Context context, String phone){
+        Intent intent = new Intent(context, CustomerIntentService.class);
+        intent.setAction(ACTION_REGISTER);
+        intent.putExtra("phone",phone);
+        context.startService(intent);
+    }
+
+    public static void startActionEdit(Context context, Customer customer){
+        Intent intent = new Intent(context, CustomerIntentService.class);
+        intent.setAction(ACTION_EDIT);
+        intent.putExtra("customer",(Parcelable) customer);
+        context.startService(intent);
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
@@ -105,6 +125,16 @@ public class CustomerIntentService extends IntentService {
                 Bundle bundle = intent.getExtras();
                 if(bundle!=null){
                     handleActionAddress(bundle.getString("userId"));
+                }
+            }else if(ACTION_REGISTER.equals(action)){
+                Bundle bundle = intent.getExtras();
+                if(bundle!=null){
+                    handleActionRegister(bundle.getString("phone"));
+                }
+            }else if(ACTION_EDIT.equals(action)){
+                Bundle bundle = intent.getExtras();
+                if(bundle!=null){
+                    handleActionEdit(bundle.getParcelable("customer"));
                 }
             }
         }
@@ -146,12 +176,10 @@ public class CustomerIntentService extends IntentService {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String result = null;
                 try {
-                    System.out.println(Thread.currentThread().getName());
                     String body = response.body().string();
                     JSONObject data = new JSONObject(body).getJSONObject("data");
                     result = data.getString("result");
                     Customer customer = new Gson().fromJson(data.getJSONObject("items").toString(), Customer.class);
-                    customer.setAvatarBitmap(ImageTool.getBitmapFromWeb(customer.getAvatar()));
                     String token = data.getString("token");
                     DuApplication.customer = customer;
                     DuApplication.token = token;
@@ -224,6 +252,75 @@ public class CustomerIntentService extends IntentService {
                     intent.putExtra("status","1");
                     intent.putParcelableArrayListExtra("addresses",addresses);
                     sendBroadcast(intent);
+                }
+            }
+        });
+    }
+
+    /**
+     * 处理注册服务
+     * @param phone 注册号码
+     */
+    private void handleActionRegister(String phone){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        Request request = new Request.Builder()
+                .url(LOCAL_URL+REGISTER_URL)
+                .post(RequestBody.create(new Gson().toJson(new Customer(phone)),mediaType))
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Intent intent = new Intent(getString(R.string.customer_receiver));
+                intent.putExtra("status","0");
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String result = null;
+                try {
+                    String body = response.body().string();
+                    JSONObject data = new JSONObject(body).getJSONObject("data");
+                    result = data.getString("result");
+                    Customer customer = new Gson().fromJson(data.getJSONObject("items").toString(), Customer.class);
+                    customer.setAvatarBitmap(ImageTool.getBitmapFromWeb(customer.getAvatar()));
+                    String token = data.getString("token");
+                    DuApplication.customer = customer;
+                    DuApplication.token = token;
+                } catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    Intent intent = new Intent(getString(R.string.customer_receiver));
+                    intent.putExtra("status", result);
+                    sendBroadcast(intent);
+                }
+            }
+        });
+    }
+
+    private void handleActionEdit(Customer customer){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        Request request = new Request.Builder()
+                .url(LOCAL_URL+USER_URL)
+                .header("token",DuApplication.token)
+                .put(RequestBody.create(new Gson().toJson(customer),mediaType))
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                System.out.println("ERROR");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String body = response.body().string();
+                try {
+                    JSONObject items = new JSONObject(body).getJSONObject("data").getJSONObject("items");
+                    DuApplication.customer = new Gson().fromJson(items.toString(),Customer.class);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

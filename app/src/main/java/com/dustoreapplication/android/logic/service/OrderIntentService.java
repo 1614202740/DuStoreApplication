@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Order;
-import com.dustoreapplication.android.logic.model.OrderItem;
-import com.dustoreapplication.android.logic.model.OrderShipping;
+import com.dustoreapplication.android.logic.model.bean.Order;
+import com.dustoreapplication.android.logic.model.bean.OrderItem;
+import com.dustoreapplication.android.logic.model.bean.OrderShipping;
 import com.dustoreapplication.android.logic.model.dto.OrderDto;
 import com.google.gson.Gson;
 
@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

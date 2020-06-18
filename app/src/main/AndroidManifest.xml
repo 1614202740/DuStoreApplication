@@ -4,8 +4,9 @@
     package="com.dustoreapplication.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".DuApplication"
@@ -16,9 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.personal.address.EditAddressActivity"/>
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="m">
+        <activity android:name=".ui.personal.EditCustomerInfoActivity"></activity>
+        <activity android:name=".ui.personal.space.SpaceActivity" />
+        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".ui.personal.address.EditAddressActivity" />
         <activity android:name=".ui.activity.CheckStandActivity" />
         <activity android:name=".ui.activity.OrderDetailActivity" />
         <activity android:name=".ui.order.OrderActivity" />
@@ -26,26 +30,12 @@
         <activity android:name=".ui.activity.SecurityActivity" />
         <activity android:name=".ui.personal.address.AddressActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
-        <activity android:name=".ui.activity.SendDynamics" />
-        <activity android:name=".ui.activity.PhotoActivity">
+        <activity android:name=".ui.activity.BootActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-        </activity>
-
-        <receiver
-            android:name=".logic.receiver.CustomerReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".ui.activity.BootActivity">
-<!--            <intent-filter>-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity android:name=".ui.personal.login.LoginActivity" />
         <activity android:name=".ui.community.recommend.detail.RecommendDetailActivity" />
@@ -53,7 +43,8 @@
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main" />
         <activity android:name=".ui.CommunityActivity" />
-
+        <activity android:name=".ui.activity.PhotoActivity"/>
+        <activity android:name=".ui.activity.SendDynamicsActivity"/>
         <receiver
             android:name=".logic.receiver.CustomerReceiver"
             android:enabled="true"

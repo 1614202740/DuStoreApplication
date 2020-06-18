@@ -1,8 +1,6 @@
 package com.dustoreapplication.android.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -17,10 +15,9 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.dustoreapplication.android.ComparableFutureTask;
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.PanelSlide;
+import com.dustoreapplication.android.logic.model.bean.PanelSlide;
 
 import java.util.ArrayList;
 import java.util.List;

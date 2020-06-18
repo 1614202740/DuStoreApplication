@@ -1,6 +1,5 @@
 package com.dustoreapplication.android.view;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.PanelSlide;
+import com.dustoreapplication.android.logic.model.bean.PanelSlide;
 
 import java.util.List;
 

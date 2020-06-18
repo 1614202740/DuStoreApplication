@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Order;
-import com.dustoreapplication.android.logic.model.OrderItem;
+import com.dustoreapplication.android.logic.model.bean.Order;
+import com.dustoreapplication.android.logic.model.bean.OrderItem;
 
 import java.util.ArrayList;
 
@@ -87,7 +87,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     @Override
     public int getItemCount() {
-        return orders.size();
+        return orders==null?0:orders.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

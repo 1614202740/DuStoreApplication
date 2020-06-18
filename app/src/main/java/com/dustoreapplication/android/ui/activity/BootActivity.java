@@ -1,21 +1,16 @@
 package com.dustoreapplication.android.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.ComparableFutureTask;
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
 import com.dustoreapplication.android.logic.manager.CustomerManager;
-import com.dustoreapplication.android.logic.model.Customer;
 import com.dustoreapplication.android.ui.MainActivity;
-import com.dustoreapplication.android.ui.personal.login.LoginActivity;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,6 +42,7 @@ public class BootActivity extends AppCompatActivity {
                 }
             }
             startActivity(new Intent(this, MainActivity.class));
+            finish();
             return 1;
         }));
         DuApplication.THREAD_POOL_EXECUTOR.execute(new ComparableFutureTask(1,()->{

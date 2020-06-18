@@ -14,6 +14,7 @@
         android:padding="16dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/personal_data_info_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"

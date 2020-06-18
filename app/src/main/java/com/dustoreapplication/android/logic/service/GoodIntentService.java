@@ -6,10 +6,9 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Good;
+import com.dustoreapplication.android.logic.model.bean.Good;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +18,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;

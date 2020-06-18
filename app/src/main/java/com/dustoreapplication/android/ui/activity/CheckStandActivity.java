@@ -15,7 +15,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Order;
 import com.dustoreapplication.android.logic.model.vo.PayTypeVo;
 import com.dustoreapplication.android.logic.receiver.OrderReceiver;
 import com.dustoreapplication.android.logic.service.OrderIntentService;
@@ -49,6 +48,7 @@ public class CheckStandActivity extends AppCompatActivity {
         initData();
         initTestData();
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mViewModel.getTotalPrice().observe(this,price->{
             priceTextView.setText(String.valueOf(price));

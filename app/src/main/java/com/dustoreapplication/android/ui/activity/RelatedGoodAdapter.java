@@ -11,11 +11,10 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Good;
+import com.dustoreapplication.android.logic.model.bean.Good;
 import com.dustoreapplication.android.view.GoodGeneralInfoView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 16142

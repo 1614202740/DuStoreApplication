@@ -12,9 +12,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Address;
+import com.dustoreapplication.android.logic.model.bean.Address;
 import com.dustoreapplication.android.logic.service.AddressIntentService;
-import com.dustoreapplication.android.logic.service.CustomerIntentService;
 
 import java.util.ArrayList;
 import java.util.List;

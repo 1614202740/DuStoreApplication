@@ -2,9 +2,7 @@ package com.dustoreapplication.android.logic.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
-import com.dustoreapplication.android.logic.model.Customer;
 import com.dustoreapplication.android.logic.service.CustomerIntentService;
 
 /**

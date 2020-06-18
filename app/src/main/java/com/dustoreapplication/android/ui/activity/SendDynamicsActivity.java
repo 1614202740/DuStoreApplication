@@ -1,34 +1,35 @@
 package com.dustoreapplication.android.ui.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
+import com.dustoreapplication.android.logic.model.dto.PostDto;
+import com.dustoreapplication.android.logic.service.DynamicIntentService;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class SendDynamics extends AppCompatActivity implements View.OnClickListener {
+public class SendDynamicsActivity extends AppCompatActivity implements View.OnClickListener {
     private AppCompatImageView back;
     private AppCompatButton next;
     private TextInputEditText textInputEditText;
     private RecyclerView mRecyclerView;
 
     private List<ImageModel> imageModels;
+    private PostDto post = new PostDto();
     private SendPhotoAdapter sendPhotoAdapter;
 
     @Override
@@ -49,7 +50,22 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         sendPhotoAdapter = new SendPhotoAdapter(imageModels);
         mRecyclerView.setAdapter(sendPhotoAdapter);
+        textInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                post.setTitle(s.toString());
+            }
+        });
     }
 
 
@@ -57,12 +73,18 @@ public class SendDynamics extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.send_dynamics_back:
-                Intent intent = new Intent(SendDynamics.this,PhotoActivity.class);
+                Intent intent = new Intent(SendDynamicsActivity.this,PhotoActivity.class);
                 intent.putExtra("selectedList", (Serializable) imageModels);
                 startActivity(intent);
                 break;
             case R.id.send_dynamics_next:
-                break;
+                post.setUserId(DuApplication.customer.getId());
+                String[] url = new String[imageModels.size()];
+                for(int i=0; i<imageModels.size(); ++i){
+                    url[i] = imageModels.get(i).getPath();
+                }
+                post.setImageUrl(url);
+                DynamicIntentService.startActionNew(this,post);
             default:
                 break;
         }

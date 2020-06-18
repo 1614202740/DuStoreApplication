@@ -3,10 +3,9 @@ package com.dustoreapplication.android.ui.activity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dustoreapplication.android.DuApplication;
-import com.dustoreapplication.android.logic.model.Address;
-import com.dustoreapplication.android.logic.model.Order;
-import com.dustoreapplication.android.logic.model.OrderItem;
+import com.dustoreapplication.android.logic.model.bean.Address;
+import com.dustoreapplication.android.logic.model.bean.Order;
+import com.dustoreapplication.android.logic.model.bean.OrderItem;
 import com.dustoreapplication.android.logic.model.vo.ConsigneeVo;
 import com.dustoreapplication.android.logic.model.vo.ShippingVo;
 

@@ -1,6 +1,6 @@
 package com.dustoreapplication.android.logic.model.dto;
 
-import com.dustoreapplication.android.logic.model.Customer;
+import com.dustoreapplication.android.logic.model.bean.Customer;
 import com.google.gson.annotations.Expose;
 
 /**

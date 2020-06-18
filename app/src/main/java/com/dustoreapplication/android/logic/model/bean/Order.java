@@ -1,17 +1,12 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.bean;
 
 import android.os.Build;
-import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import lombok.Data;
 

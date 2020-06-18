@@ -1,20 +1,19 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * Created by 16142
- * on 2020/6/12
+ * @author : 曹威
+ * @date : 2020-06-08  11:04
+ * @description :
  */
 @Data
-public class Dynamic implements Parcelable {
-    /**
-     * 帖子id
-     */
-    private String id;
+public class PostDto implements Serializable, Parcelable {
 
     /**
      * 用户id
@@ -39,33 +38,36 @@ public class Dynamic implements Parcelable {
     /**
      * 标签id
      */
-    private String tagId;
+    private String[] tags;
 
     /**
      * 帖子图片
      */
-    private String imageUrl;
+    private String[] imageUrl;
 
-    protected Dynamic(Parcel in) {
-        id = in.readString();
+    public PostDto(){
+
+    }
+
+    protected PostDto(Parcel in) {
         userId = in.readString();
         title = in.readString();
         content = in.readString();
         byte tmpTop = in.readByte();
         top = tmpTop == 0 ? null : tmpTop == 1;
-        tagId = in.readString();
-        imageUrl = in.readString();
+        tags = in.createStringArray();
+        imageUrl = in.createStringArray();
     }
 
-    public static final Creator<Dynamic> CREATOR = new Creator<Dynamic>() {
+    public static final Creator<PostDto> CREATOR = new Creator<PostDto>() {
         @Override
-        public Dynamic createFromParcel(Parcel in) {
-            return new Dynamic(in);
+        public PostDto createFromParcel(Parcel in) {
+            return new PostDto(in);
         }
 
         @Override
-        public Dynamic[] newArray(int size) {
-            return new Dynamic[size];
+        public PostDto[] newArray(int size) {
+            return new PostDto[size];
         }
     };
 
@@ -76,12 +78,11 @@ public class Dynamic implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
         dest.writeString(userId);
         dest.writeString(title);
         dest.writeString(content);
         dest.writeByte((byte) (top == null ? 0 : top ? 1 : 2));
-        dest.writeString(tagId);
-        dest.writeString(imageUrl);
+        dest.writeStringArray(tags);
+        dest.writeStringArray(imageUrl);
     }
 }

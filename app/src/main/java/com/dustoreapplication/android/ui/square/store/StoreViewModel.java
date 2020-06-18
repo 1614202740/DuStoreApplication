@@ -1,24 +1,14 @@
 package com.dustoreapplication.android.ui.square.store;
 
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dustoreapplication.android.ComparableFutureTask;
-import com.dustoreapplication.android.DuApplication;
-import com.dustoreapplication.android.logic.model.Good;
-import com.dustoreapplication.android.logic.model.PanelBlock;
-import com.dustoreapplication.android.logic.model.PanelSlide;
-import com.dustoreapplication.android.tool.ImageTool;
+import com.dustoreapplication.android.logic.model.bean.Good;
+import com.dustoreapplication.android.logic.model.bean.PanelBlock;
+import com.dustoreapplication.android.logic.model.bean.PanelSlide;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by 16142

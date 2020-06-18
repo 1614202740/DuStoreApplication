@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:gravity="center"
-        android:text="list_title"
+        android:text="热门榜单"
         android:textColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -23,7 +23,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignTop="@+id/list_title_tv"
-        android:background="@android:color/holo_red_dark"
+        android:background="@mipmap/topic_title_test"
         app:layout_constraintTop_toBottomOf="@id/list_title_tv"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

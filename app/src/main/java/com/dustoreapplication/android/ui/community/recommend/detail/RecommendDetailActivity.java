@@ -6,26 +6,26 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.R;
+import com.dustoreapplication.android.logic.model.vo.UserVo;
 import com.dustoreapplication.android.tool.ScreenTool;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -39,8 +39,6 @@ public class RecommendDetailActivity extends AppCompatActivity {
     private AppCompatTextView publisherNameTextView;
     private AppCompatTextView publisherPositionTextView;
     private AppCompatButton subscribeButton;
-//    private AppCompatImageView showImageView;
-//    private RecyclerView thumbnailRecyclerView;
     private AppCompatTextView containerTextView;
     private AppCompatTextView publishTimeTextView;
     private AppCompatImageButton goodButton;
@@ -50,6 +48,10 @@ public class RecommendDetailActivity extends AppCompatActivity {
     private RecyclerView commentRecyclerView;
     private TabLayout thumbnailTabLayout;
     private ViewPager2 showViewPage;
+
+    private RecommendDetailViewModel mViewModel;
+    private GoodHeadListAdapter goodHeadListAdapter;
+    private CommentListAdapter commentListAdapter;
 
     private void initView(){
         toolbarReturnButton = findViewById(R.id.recommend_detail_toolbar_return_btn);
@@ -70,20 +72,6 @@ public class RecommendDetailActivity extends AppCompatActivity {
         showViewPage = findViewById(R.id.recommend_detail_show_vp);
     }
 
-    private List<Integer> resources = new ArrayList<>();
-    {
-        resources.add(R.mipmap.topic_title_test);
-        resources.add(R.mipmap.topic_title_test);
-        resources.add(R.mipmap.topic_title_test);
-    }
-
-    private List<Integer> resources1 = new ArrayList<>();
-    {
-        for(int i=0; i<10; i++){
-            resources1.add(R.mipmap.topic_title_test);
-        }
-    }
-
     public RecommendDetailActivity() {
     }
 
@@ -93,55 +81,79 @@ public class RecommendDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recommend_detail);
         initView();
         toolbarReturnButton.setOnClickListener(v->finish());
-        Glide.with(getBaseContext()).load(R.mipmap.topic_title_test).into(publisherHeadCircleImageView);
-        if(getIntent().getExtras()!=null) {
-            publisherNameTextView.setText(getIntent().getExtras().getString("publisher_name", "匿名用户"));
-        }
-        publisherPositionTextView.setText("江西省南昌市");
+        mViewModel = new ViewModelProvider(this).get(RecommendDetailViewModel.class);
+        mViewModel.setDynamic(getIntent().getParcelableExtra("dynamic"));
+        mViewModel.getDynamic().observe(this,dynamic -> {
+            UserVo userVo = dynamic.getUserVo();
+            Glide.with(getBaseContext()).load(userVo.getAvatar()).into(publisherHeadCircleImageView);
+            mViewModel.setSize(dynamic.getCommentCount()==0?new Random().nextInt(5):dynamic.getCommentCount());
+            publisherNameTextView.setText(userVo.getUsername());
+            publisherPositionTextView.setText("江西省南昌市");
+            containerTextView.setText(dynamic.getTitle());
+            goodCountTextView.setText(String.valueOf(dynamic.getLikeCount()));
+            publishTimeTextView.setText(dynamic.getUpdateTime());
+            if(goodHeadListAdapter==null){
+                goodHeadListAdapter = new GoodHeadListAdapter(dynamic.getLikeList());
+                goodHeadRecyclerView.setAdapter(goodHeadListAdapter);
+            }else {
+                goodHeadListAdapter.setResources(dynamic.getLikeList());
+            }
+            showViewPage.setAdapter(new RecyclerView.Adapter() {
+
+                String[] resources = dynamic.getImageUrl();
+
+                class ViewHolder extends RecyclerView.ViewHolder {
+                    public ViewHolder(@NonNull View itemView) {
+                        super(itemView);
+                    }
+                }
+
+                @NonNull
+                @Override
+                public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    AppCompatImageView view = new AppCompatImageView(parent.getContext());
+                    view.setMaxHeight(ScreenTool.px2dip(parent.getContext(),512));
+                    view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    return new ViewHolder(view);
+                }
+
+                @Override
+                public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                    Glide.with(holder.itemView).load(resources[position]).into((AppCompatImageView)holder.itemView);
+                }
+
+
+                @Override
+                public int getItemCount() {
+                    return resources.length;
+                }
+            });
+
+            new TabLayoutMediator(thumbnailTabLayout, showViewPage, (tab, position) -> {
+                View view = LayoutInflater.from(this).inflate(R.layout.imageview_detail_thumbnail,tab.parent,false);
+                AppCompatImageView imageView = view.findViewById(R.id.thumbnail_iv);
+                Glide.with(view).load(dynamic.getImageUrl()[position]).into(imageView);
+                tab.setCustomView(view);
+            }).attach();
+        });
+        mViewModel.getSize().observe(this,size->{
+            commentCountTextView.setText(String.valueOf(size));
+            if(commentListAdapter==null){
+                commentListAdapter = new CommentListAdapter(size);
+                commentRecyclerView.setAdapter(commentListAdapter);
+            }else {
+                commentListAdapter.setSize(size);
+            }
+        });
 //        LinearLayoutManager thumbnailLayoutManager = new LinearLayoutManager(this);
 //        thumbnailLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 //        thumbnailRecyclerView.setLayoutManager(thumbnailLayoutManager);
 //        thumbnailRecyclerView.setAdapter(new ThumbnailListAdapter(resources,showImageView));
-        containerTextView.setText("#送女友 6选一 系列排位\n" +
-                "#一般这种好鞋 大家是自穿的多还是送女友的多");
         goodButton.setOnClickListener(v->{
 
         });
-        LinearLayoutManager goodLayoutManager = new LinearLayoutManager(this);
-        goodLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        goodHeadRecyclerView.setLayoutManager(goodLayoutManager);
-        goodHeadRecyclerView.setAdapter(new GoodHeadListAdapter(resources1));
-        commentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        commentRecyclerView.setAdapter(new CommentListAdapter());
-        showViewPage.setAdapter(new RecyclerView.Adapter() {
 
-            class ViewHolder extends RecyclerView.ViewHolder {
-                public ViewHolder(@NonNull View itemView) {
-                    super(itemView);
-                }
-            }
-
-            @NonNull
-            @Override
-            public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                AppCompatImageView view = new AppCompatImageView(parent.getContext());
-                view.setMaxHeight(ScreenTool.px2dip(parent.getContext(),512));
-                view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                return new ViewHolder(view);
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-                Glide.with(holder.itemView).load(resources.get(position)).into((AppCompatImageView)holder.itemView);
-            }
-
-
-            @Override
-            public int getItemCount() {
-                return resources.size();
-            }
-        });
 
         showViewPage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback(){
             @Override
@@ -167,11 +179,5 @@ public class RecommendDetailActivity extends AppCompatActivity {
 
             }
         });
-        new TabLayoutMediator(thumbnailTabLayout, showViewPage, (tab, position) -> {
-            View view = LayoutInflater.from(this).inflate(R.layout.imageview_detail_thumbnail,tab.parent,false);
-            AppCompatImageView imageView = view.findViewById(R.id.thumbnail_iv);
-            Glide.with(view).load(resources.get(position)).into(imageView);
-            tab.setCustomView(view);
-        }).attach();
     }
 }

@@ -36,21 +36,11 @@ public class CommunityFragment extends Fragment {
     private TabLayout communityGuideTabLayout;
     private ViewPager2 communityGuideViewPager;
 
-    private List<Integer> colors = new ArrayList<>();
-    {
-        colors.add(android.R.color.black);
-        colors.add(android.R.color.holo_purple);
-        colors.add(android.R.color.holo_blue_dark);
-        colors.add(android.R.color.holo_green_light);
-    }
-
     private List<Fragment> pages = new ArrayList<>();
 
     {
         pages.add(RecommendFragment.newInstance());
-        pages.add(SquareFragment.newInstance("a","b"));
-        pages.add(PageFragment.newInstance(colors,1));
-        pages.add(PageFragment.newInstance(colors,1));
+        pages.add(SquareFragment.newInstance());
     }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,7 +57,7 @@ public class CommunityFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                return colors.size();
+                return pages.size();
             }
         });
 
@@ -102,19 +92,11 @@ public class CommunityFragment extends Fragment {
                 (tab, position) -> {
                     switch (position){
                         case 0:{
-                            tab.setText("关注");
-                            break;
-                        }
-                        case 1:{
                             tab.setText("推荐");
                             break;
                         }
-                        case 2:{
+                        case 1:{
                             tab.setText("广场");
-                            break;
-                        }
-                        case 3:{
-                            tab.setText("资讯");
                             break;
                         }
                         default:

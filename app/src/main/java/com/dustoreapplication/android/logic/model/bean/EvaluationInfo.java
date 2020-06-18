@@ -1,13 +1,9 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Flushable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import lombok.Data;
 

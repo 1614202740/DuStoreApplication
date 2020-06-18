@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dustoreapplication.android.logic.model.Order;
+import com.dustoreapplication.android.logic.model.bean.Order;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

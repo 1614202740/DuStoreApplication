@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
 
@@ -40,7 +40,8 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         initView();
-        setSupportActionBar(toolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
         if(mViewModel.getAllOrders().getValue()==null){
@@ -118,17 +119,18 @@ public class OrderActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
-
+        viewPager.setCurrentItem(getIntent().getIntExtra("position",0));
     }
 
     private void initView(){
-        toolbar = findViewById(R.id.order_toolbar);
+        mToolbar = findViewById(R.id.order_toolbar);
         tabLayout = findViewById(R.id.order_status_tl);
         viewPager = findViewById(R.id.order_status_vp);
     }
 
-    public static void startActivity(Context context){
+    public static void startActivity(Context context, int position){
         Intent intent = new Intent(context,OrderActivity.class);
+        intent.putExtra("position",position);
         context.startActivity(intent);
     }
 }

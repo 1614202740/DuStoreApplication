@@ -61,4 +61,6 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombok_version"
 
     implementation 'liji.library.dev:citypickerview:3.1.13'
+
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }

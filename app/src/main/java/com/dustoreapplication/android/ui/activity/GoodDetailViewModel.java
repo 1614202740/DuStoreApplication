@@ -3,12 +3,9 @@ package com.dustoreapplication.android.ui.activity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dustoreapplication.android.logic.model.Evaluation;
-import com.dustoreapplication.android.logic.model.EvaluationInfo;
-import com.dustoreapplication.android.logic.model.Good;
-import com.dustoreapplication.android.logic.model.Order;
+import com.dustoreapplication.android.logic.model.bean.EvaluationInfo;
+import com.dustoreapplication.android.logic.model.bean.Good;
 import com.dustoreapplication.android.logic.model.vo.GoodSelectVo;
-import com.dustoreapplication.android.logic.model.vo.SkuVo;
 
 import java.util.ArrayList;
 

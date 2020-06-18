@@ -8,8 +8,8 @@ import androidx.annotation.Nullable;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.PanelBlock;
-import com.dustoreapplication.android.logic.model.PanelSlide;
+import com.dustoreapplication.android.logic.model.bean.PanelBlock;
+import com.dustoreapplication.android.logic.model.bean.PanelSlide;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;

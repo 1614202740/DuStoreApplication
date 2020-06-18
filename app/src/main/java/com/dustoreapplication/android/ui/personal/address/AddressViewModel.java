@@ -3,7 +3,7 @@ package com.dustoreapplication.android.ui.personal.address;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.dustoreapplication.android.logic.model.Address;
+import com.dustoreapplication.android.logic.model.bean.Address;
 
 import java.util.ArrayList;
 

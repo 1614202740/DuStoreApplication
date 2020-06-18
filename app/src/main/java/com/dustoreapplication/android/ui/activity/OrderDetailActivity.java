@@ -17,10 +17,8 @@ import android.os.Bundle;
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Address;
-import com.dustoreapplication.android.logic.model.Order;
-import com.dustoreapplication.android.logic.model.OrderItem;
-import com.dustoreapplication.android.logic.model.OrderShipping;
+import com.dustoreapplication.android.logic.model.bean.Address;
+import com.dustoreapplication.android.logic.model.bean.Order;
 import com.dustoreapplication.android.logic.receiver.AddressReceiver;
 import com.dustoreapplication.android.logic.service.CustomerIntentService;
 
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private AppCompatTextView consigneeTextView;
     private AppCompatTextView phoneTextView;
     private AppCompatTextView addressTextView;
@@ -51,7 +49,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         mViewModel = new ViewModelProvider(this).get(OrderDetailViewModel.class);
         initView();
         initData();
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mViewModel.getAddresses().observe(this,addresses -> {
             Integer position = mViewModel.getPositionAddress().getValue();
@@ -99,7 +98,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        toolbar = findViewById(R.id.order_detail_tb);
+        mToolbar = findViewById(R.id.order_detail_tb);
         consigneeTextView = findViewById(R.id.order_detail_consignee_tv);
         phoneTextView = findViewById(R.id.order_detail_phone_tv);
         addressTextView = findViewById(R.id.order_detail_address_tv);

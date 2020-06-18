@@ -1,9 +1,7 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 
 import lombok.Data;
 import lombok.NonNull;

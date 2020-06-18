@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -34,8 +31,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.EvaluationInfo;
-import com.dustoreapplication.android.logic.model.Good;
+import com.dustoreapplication.android.logic.model.bean.EvaluationInfo;
+import com.dustoreapplication.android.logic.model.bean.Good;
 import com.dustoreapplication.android.logic.model.dto.OrderDto;
 import com.dustoreapplication.android.logic.model.vo.GoodSelectVo;
 import com.dustoreapplication.android.logic.receiver.GoodReceiver;
@@ -43,7 +40,6 @@ import com.dustoreapplication.android.logic.receiver.OrderReceiver;
 import com.dustoreapplication.android.logic.service.GoodIntentService;
 import com.dustoreapplication.android.logic.service.OrderIntentService;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -73,6 +69,9 @@ public class GoodDetailActivity extends AppCompatActivity {
         initView();
         initActionBar();
         Intent testData = initTestData();
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mViewModel = new ViewModelProvider(this).get(GoodDetailViewModel.class);
         mViewModel.getGoodInfo().observe(this,good->{
             Glide.with(this).load(good.getImage()[0]).into(showImageView);

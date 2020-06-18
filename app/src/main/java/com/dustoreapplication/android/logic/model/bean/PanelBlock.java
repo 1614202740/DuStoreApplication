@@ -1,4 +1,4 @@
-package com.dustoreapplication.android.logic.model;
+package com.dustoreapplication.android.logic.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

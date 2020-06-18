@@ -152,7 +152,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:orientation="horizontal" />
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="36dp"
@@ -192,7 +193,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommend_detail_comment_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

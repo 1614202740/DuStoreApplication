@@ -1,29 +1,20 @@
 package com.dustoreapplication.android.ui.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.os.PersistableBundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.WindowCallbackWrapper;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -103,14 +94,15 @@ public class PhotoActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PhotoActivity.this,SendDynamics.class);
+                Intent intent = new Intent(PhotoActivity.this, SendDynamicsActivity.class);
                 intent.putExtra("selectedList", (Serializable) selectImages);
                 startActivity(intent);
             }
         });
     }
 
-    public static void checkStoragePermissions(Activity activity){
+    public void checkStoragePermissions(Activity activity){
+
         try{
             //监测是否有写的权限
             int permission= ActivityCompat.checkSelfPermission(activity,
@@ -130,5 +122,8 @@ public class PhotoActivity extends AppCompatActivity {
         }
     }
 
-
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context,PhotoActivity.class);
+        context.startActivity(intent);
+    }
 }

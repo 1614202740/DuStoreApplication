@@ -11,21 +11,22 @@ import com.dustoreapplication.android.R;
 
 public class SecurityActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
         initView();
-        this.setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v->finish());
         if (getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private void initView(){
-        toolbar = findViewById(R.id.security_toolbar);
+        mToolbar = findViewById(R.id.security_toolbar);
     }
 
     public static void startActivity(Context context){

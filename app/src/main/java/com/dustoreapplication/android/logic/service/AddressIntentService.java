@@ -3,14 +3,12 @@ package com.dustoreapplication.android.logic.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 
 import com.dustoreapplication.android.DuApplication;
 import com.dustoreapplication.android.R;
-import com.dustoreapplication.android.logic.model.Address;
-import com.dustoreapplication.android.logic.model.dto.AddressDto;
+import com.dustoreapplication.android.logic.model.bean.Address;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;

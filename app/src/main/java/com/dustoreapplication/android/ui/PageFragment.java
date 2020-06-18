@@ -24,18 +24,9 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class PageFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String COLORS = "colors";
-    private static final String POSITION = "position";
 
-    public static PageFragment newInstance(List<Integer> colors, int position) {
-        Bundle args = new Bundle();
-        args.putSerializable(COLORS, ((ArrayList<Integer>) colors));
-        args.putInt(POSITION, position);
-        PageFragment fragment = new PageFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public static PageFragment newInstance() {
+        return new PageFragment();
     }
 
     private List<Integer> mColors;
@@ -44,10 +35,6 @@ public class PageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColors = (List<Integer>) getArguments().getSerializable(COLORS);
-            mPosition = getArguments().getInt(POSITION);
-        }
     }
 
     @Override

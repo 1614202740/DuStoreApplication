@@ -85,6 +85,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return ImageModelList.size();
+        return 10;
     }
 }
